@@ -36,10 +36,20 @@ else{ //sinon on cherche le dernier élément et on ajoute la cellule après
   }
 }
 }
+
 void freeList(commandList *list)
 {
-
+  commandListCell *head = list->head;
+  commandListCell *tmp;
+  while (head->next != NULL){ //Tant que la liste n'est pas vide on supprime decale la tete vers l'avant et on supprime la cellule
+    tmp = head;
+    head = head->next;
+    free(tmp);
+  }
+  list->head = NULL; //une fois la liste vide on réinitialise la tete et la queue
+  list->tail = NULL;
 }
+
 cmdFunction find(commandList list, char* name)
 {
 
