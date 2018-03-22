@@ -2,11 +2,6 @@
 
 void add(commandList *list,cmdIdentifier function)
 {
-
-}
-
-void add(commandList *list,cmdIdentifier function)
-{
   commandListCell *newCell = (commandListCell*)malloc(sizeof(commandListCell)); //allocation de la mémoire pour la nouvelle cellule
 
   if (newCell == NULL) {
