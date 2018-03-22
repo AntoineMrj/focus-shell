@@ -25,7 +25,7 @@ void add(commandList *list,cmdIdentifier function);
 void freeList(commandList *list);
 
 //trouve et renvoit la fonction principale d'une commande nommée name
-//contenu dans une liste
+//contenue dans une liste
 cmdFunction find(commandList list, char* name);
 
 
