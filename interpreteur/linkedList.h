@@ -28,5 +28,8 @@ void freeList(commandList *list);
 //contenue dans une liste
 cmdFunction find(commandList list, char* name);
 
+//Retourne une liste vide
+commandList initializeList();
+
 
 #endif

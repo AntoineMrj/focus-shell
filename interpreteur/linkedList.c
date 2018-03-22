@@ -49,3 +49,11 @@ cmdFunction find(commandList list, char* name)
 {
 
 }
+
+commandList initializeList(){
+  commandList list;
+  list.head = NULL;
+  list.tail = NULL;
+
+  return list;
+}
