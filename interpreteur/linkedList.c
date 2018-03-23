@@ -11,7 +11,7 @@ void add(commandList *list,cmdIdentifier function)
 
 //creation de la Cellule
 newCell->function = function;
-newCell->next=NULL; //Pour l'instant pas de classement par ordre alphabétique donc on ajoute la cell a la fin
+newCell->next=NULL; //On ajoute la cellule à la fin
 
 if(list->head == NULL){ //si la liste et vide on met la cellule dans head
   list->head = newCell;
@@ -38,7 +38,7 @@ void freeList(commandList *list)
   list->head = NULL; //une fois la liste vide on réinitialise la tete et la queue
 }
 
-cmdFunction find(commandList list, char* name)
+cmdFunction find(commandList list, char* name) //renvoie la fonction si elle est trouvée
 {
   commandListCell *currentFunction = list.head;
   while (strcmp(name,currentFunction->function.name) && currentFunction->next !=NULL) { //tant que la fonction n'a pas été trouvée et qu'on est pas à la fin de la liste
