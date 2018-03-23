@@ -3,18 +3,15 @@
 
 #include "command.h"
 
-
 //Cellule d'une liste chainée
 typedef struct commandListCell{
     cmdIdentifier function;
     commandListCell* next;
-    commandListCell* previous;
 }commandListCell;
 
 //Liste chainée
 typedef struct commandList{
     commandListCell* head;
-    commandListCell* tail;
 }commandList;
 
 //ajoute un élément à une liste chainée
