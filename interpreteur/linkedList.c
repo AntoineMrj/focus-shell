@@ -28,7 +28,6 @@ void add(commandList *list, cmdIdentifier function)
     currentCell->next = newCell; //on chaine la nouvelle cellule
   }
 }
-}
 
 void freeList(commandList *list)
 {

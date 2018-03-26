@@ -2,6 +2,7 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 #include "result.h"
+#include "string.h"
 #include "../commandes/ls.h"
 //ENUM MODE : correspond au différent mode d'excécution d'une commande
 typedef enum MODE {
@@ -11,15 +12,16 @@ typedef enum MODE {
     REDIRECT_IN,      // < RESULT IN
     REDIRECT_IN,      // << USER IN
     PIPE,             // | PIPE
-    AND,            //&& et logique (exécution simple)
-    OR            //|| ou logique
+    AND,              //&& et logique (exécution simple)
+    OR,               //|| ou logique
+    NONE
 } MODE;
-
+MODE findMODE(char *string);
 typedef struct command
 {
     char *name;
     int nbArg;
-    char *arg;
+    char **arg;
     MODE mode;
 } command;
 
@@ -31,8 +33,13 @@ typedef struct cmdIdentifier
 } cmdIdentifier;
 
 //Initialise une command
-command initCommand(char *name, int nbArg, char *arg, MODE mode);
+command initCommand(char *name, int nbArg, char **arg, MODE mode);
+//Initialise une command
+void cpCommand(command *destination, command *source);
 //Execute une commande cmd
 int executeCommand(command *cmd);
+
+//Fonction de test
+void printCommand(command *cmd);
 
 #endif
