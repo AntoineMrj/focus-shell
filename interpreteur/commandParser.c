@@ -2,12 +2,14 @@
 #include "commandParser.h"
 
 //Initialise un parser
-void setParser(commandParser *parser, char *chaine)
+commandParser* setParser( char *chaine)
 {
     commandParser *temp = malloc(sizeof(commandParser));
     temp->actualPosition = 0;
     temp->chaine = chaine;
     temp->state = WAIT;
+    temp->hasEnded = 0;
+    return temp;
 }
 
 //Lit une commande d'un parser
@@ -16,77 +18,74 @@ void setParser(commandParser *parser, char *chaine)
 //Stocke les commandes trouvé dans cmd
 char getActualChar(commandParser *parser)
 {
-    return parser->chaine[parser->actualPosition];
+    char temp =  parser->chaine[parser->actualPosition];
+    parser->actualPosition++;
+    return temp;
 }
-int parse(commandParser *parser, command *cmd)
+int parse(commandParser *parser, command **cmd)
 {
+    //Sortie si on a déjà atteint la fin dans un appel précédent
+    if(parser->hasEnded == 1)
+        return 0;
+
+    //Création du buffer
     char buffer[255];
     int bufferPosition = 0;
-    int position = parser->actualPosition;
+
     //Variable temporaire de la commande
     char *argBUFFER[255];
     int actualArg = 0;
     char cmdName[255];
     MODE mode;
-    //caractère actuel
-    char actualChar = getActualChar(parser);
-    if (actualChar == '\0')
-    {
-        return 0;
-    }
-    do
-    {
-        if (actualChar != ' ')
-        {
-            if (parser->state == WAIT)
+
+    //Variable de parcours de la chaine
+    char actualChar='X';
+    int position = parser->actualPosition;
+    while(actualChar != '\0')
+    {              
+        //Ignore les espaces
+        while( (actualChar = getActualChar(parser))==' ');
+
+        //Initialisation du buffer
+        buffer[0] = '\0';
+        bufferPosition = 0;
+        do
+        {           
+            if (actualChar == '\0')
             {
-                parser->state = PARSING;
+                mode = NONE;
+                parser->hasEnded = 1;   
+                break;
             }
+            buffer[bufferPosition] = actualChar;
+            bufferPosition++;
+        }while((actualChar = getActualChar(parser)) !=' ');
+        //Marque la fin du buffer
+        buffer[bufferPosition] = '\0';
+        //Récupération du mode
+        mode = findMODE(buffer);
+        if (mode != NONE)
+        {
+            break;
         }
         else
         {
-            parser->state = WAIT;
-            buffer[bufferPosition] = '\0';
-            //TEST TYPE
-            mode = findMODE(buffer);
-            if (mode != NONE)
+            //Assignation de la première chaine au nom de la commande
+            if (actualArg == 0)
             {
-                break;
+                strcpy(cmdName, buffer);
             }
+            //Le reste à ses arguments
             else
             {
-                if (actualArg == 0)
-                {
-                    strcpy(cmdName, buffer);
-                }
-                else
-                {
-                    argBUFFER[actualArg] = malloc(sizeof(char) * 256);
-                    strcpy(argBUFFER[actualArg], buffer);
-                }
-                actualArg++;
+                argBUFFER[actualArg-1] = malloc(sizeof(char) * 256);
+                strcpy(argBUFFER[actualArg-1], buffer);
             }
-            buffer[0] = '\0';
-            bufferPosition = 0;
+            actualArg++;
         }
-        if (parser->state == PARSING)
-        {
-            buffer[bufferPosition] = actualChar;
-            bufferPosition++;
-        }
-        char actualChar = getActualChar(parser);
-        if (actualChar == '\0')
-        {
-            mode = NONE;
-        }
-        position++;
-    } while (actualChar != '\0');
-    parser->actualPosition = position;
-    (*cmd) = initCommand(cmdName, actualArg--, argBUFFER, mode);
+ 
+    }
+    //Copie de la commande crée
+    (*cmd) = initCommand(cmdName, actualArg-1, argBUFFER, mode);
     return 1;
-    //Parse la chaine associé au parser
-    //Une fois un symbole de fin de commande trouvé ('<','|','&','&&',...) ou qu'on atteint la fin de la chaine
-    //Création initialisation de cmd avec les arguments trouvé
-    //retourne 1 si la chaine n'est pas encore vide ou vient juste d'être vidé
-    //0 sinon
 }

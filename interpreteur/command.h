@@ -4,13 +4,14 @@
 #include "result.h"
 #include "string.h"
 #include "../commandes/ls.h"
+#include "stdlib.h"
+#include "stdio.h"
 //ENUM MODE : correspond au différent mode d'excécution d'une commande
 typedef enum MODE {
     DETACHEMENT,      // & DETACHMENT DU TERMINAL
     REDIRECT_OUT_END, // >> SORTIE VERS FIN DE FICHIER
     REDIRECT_OUT,     // > SORTIE VERS FICHIER
     REDIRECT_IN,      // < RESULT IN
-    REDIRECT_IN,      // << USER IN
     PIPE,             // | PIPE
     AND,              //&& et logique (exécution simple)
     OR,               //|| ou logique
@@ -33,7 +34,7 @@ typedef struct cmdIdentifier
 } cmdIdentifier;
 
 //Initialise une command
-command initCommand(char *name, int nbArg, char **arg, MODE mode);
+command* initCommand(char *name, int nbArg, char **arg, MODE mode);
 //Initialise une command
 void cpCommand(command *destination, command *source);
 //Execute une commande cmd
