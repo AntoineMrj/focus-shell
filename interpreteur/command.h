@@ -15,6 +15,7 @@ typedef enum MODE {
     PIPE,             // | PIPE
     AND,              //&& et logique (exécution simple)
     OR,               //|| ou logique
+    END,
     NONE
 } MODE;
 MODE findMODE(char *string);
@@ -34,7 +35,7 @@ typedef struct cmdIdentifier
 } cmdIdentifier;
 
 //Initialise une command
-command* initCommand(char *name, int nbArg, char **arg, MODE mode);
+command *initCommand(char *name, int nbArg, char **arg, MODE mode);
 //Initialise une command
 void cpCommand(command *destination, command *source);
 //Execute une commande cmd

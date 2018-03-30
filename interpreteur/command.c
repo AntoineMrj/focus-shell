@@ -1,19 +1,19 @@
 #include "command.h"
 
-command* initCommand(char *name, int nbArg, char **arg, MODE mode)
+command *initCommand(char *name, int nbArg, char **arg, MODE mode)
 {
     command *temp = malloc(sizeof(command));
-    temp->name = malloc(sizeof(char)*strlen(name));
-    strcpy(temp->name,name);
+    temp->name = malloc(sizeof(char) * strlen(name));
+    strcpy(temp->name, name);
     temp->nbArg = nbArg;
-    temp->arg = malloc(sizeof(char*)*nbArg);
-    for(int i=0;i<nbArg;i++)
+    temp->arg = malloc(sizeof(char *) * nbArg);
+    for (int i = 0; i < nbArg; i++)
     {
-        temp->arg[i] = malloc(sizeof(char)*strlen(arg[i]));
+        temp->arg[i] = malloc(sizeof(char) * strlen(arg[i]));
         strcpy(temp->arg[i], arg[i]);
     }
 
-    temp->mode = mode;   
+    temp->mode = mode;
     return temp;
 }
 void cpCommand(command *destination, command *source)
@@ -58,6 +58,10 @@ MODE findMODE(char *string)
     {
         return OR;
     }
+    else if (strcmp(string, "\0") == 0)
+    {
+        return END;
+    }
     else
     {
         return NONE;
@@ -78,6 +82,6 @@ void printCommand(command *cmd)
     printf("nb arg : %i\n", cmd->nbArg);
     for (int i = 0; i < cmd->nbArg; i++)
     {
-        printf("arg %i = %s \n", i+1, cmd->arg[i]);
+        printf("arg %i = %s \n", i + 1, cmd->arg[i]);
     }
 }
