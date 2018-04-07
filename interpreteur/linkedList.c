@@ -43,7 +43,6 @@ void freeList(commandList *list)
 }
 
 cmdFunction find(commandList list, char *name) //renvoie la fonction si elle est trouvée
-
 {
   commandListCell *currentFunction = list.head;
   while (strcmp(name, currentFunction->function.name) && currentFunction->next != NULL)
