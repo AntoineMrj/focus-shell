@@ -2,19 +2,20 @@
 #define STACK_H
 #include "command.h"
 //pile de base avec ses fonctions
+
 typedef struct commandStackCell
 {
-    command cmd;
-    commandStackCell *next;
+  command cmd;
+  commandStackCell *next;
+}commandStackCell;
 
-} commandStackCell;
 
 typedef struct commandStack
 {
-    commandStackCell *head;
-} commandStack;
+  commandStackCell *head;
+}commandStack;
 
-void push(commandStack stack, command cmd);
-command pop(commandStack stack);
+void push(commandStack *stack, command cmd);
+command pop(commandStack *stack);
 
 #endif
