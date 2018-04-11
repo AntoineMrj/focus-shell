@@ -33,3 +33,11 @@ char* pop(commandQueue *queue)
 
   return cmd;
 }
+
+commandQueue *initQueue()
+{
+  commandQueue *queue = malloc(sizeof(commandQueue)); //réservation de l'espace mémoire pour la Queue
+  queue->head = NULL; //initialisation de la queue;
+
+  return queue;
+}

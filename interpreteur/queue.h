@@ -17,5 +17,6 @@ typedef struct commandQueue
 
 void push(commandQueue *queue, command cmd);
 command pop(commandQueue *queue);
+commandQueue *initQueue(); //retourne une queue vide
 
 #endif
