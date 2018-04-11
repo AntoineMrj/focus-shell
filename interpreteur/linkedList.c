@@ -59,9 +59,9 @@ cmdFunction find(commandList list, char *name) //renvoie la fonction si elle est
   }
 }
 
-commandList initializeList()
+commandList *initList()
 {
-  commandList list;
+  commandList *list = malloc(sizeof(commandList));
   list.head = NULL;
 
   return list;
