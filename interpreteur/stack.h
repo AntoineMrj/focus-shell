@@ -17,5 +17,6 @@ typedef struct commandStack
 
 void push(commandStack *stack, command cmd);
 command pop(commandStack *stack);
+commandStack *initStack(); //retourne une stack vide
 
 #endif

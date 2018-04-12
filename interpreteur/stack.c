@@ -18,3 +18,11 @@ command pop(commandStack *stack)
 
   return cmd;
 }
+
+commandStack *initStack()
+{
+  commandStack *stack = malloc(sizeof(commandStack)); //réservation de l'espace mémoire pour la Stack
+  stack->head = NULL; //initialisation de la stack;
+
+  return stack;
+}

@@ -1,31 +1,29 @@
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "mycat.h"
+#include <unistd.h>
 
 int main (int argc, char*argv[]){
   int i;
-  int byte_lu;
-  char tampon [1024];
-  size_t fd;
+  char ligne[1000] = "";
+  FILE *fichier = NULL;
 
   for (i=1; i<argc; i++){
-    fd = open(argv[i],O_RDONLY);
+    fichier = fopen(argv[i],"r");
 
-    if(fd==-1){
-      printf("these file does not exist, check the name\n");
-      return(2);
+    if(!fichier){
+      printf("This file does not exist, check the name\n");
+      break;
     }
 
     else{
-      while((byte_lu=read(fd,tampon,1024)) >0)
-        fd = write(STDOUT_FILENO,tampon,byte_lu);
-
-      close(fd);
+      while(fgets(ligne,1000,fichier)){
+        printf("%s",ligne);
+      }
     }
 
-    return(0) ;
+    fclose(fichier);
   }
+
+  return(0);
 }
