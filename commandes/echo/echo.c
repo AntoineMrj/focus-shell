@@ -1,11 +1,9 @@
-#include "myecho.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "echo.h"
 
-int main(int argc, char *argv[])
+int echo(int argc, char *argv[])
 {
-  int i =1;
-  while(argv[i] != NULL)
+  int i = 1;
+  while (argv[i] != NULL)
   {
     printf("%s ", argv[i]);
     i++;

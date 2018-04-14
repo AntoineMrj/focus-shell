@@ -1,8 +1,6 @@
-#include "myrm.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "rm.h"
 
-int main(int argc, char *argv[])
+int rm(int argc, char *argv[])
 {
   printf("le fichier \"%s\" a bien été supprimé.\n", argv[1]);
   remove(argv[1]);
