@@ -3,7 +3,7 @@
 #define COMMAND_H
 #include "result.h"
 #include "string.h"
-#include "../commandes/ls.h"
+#include "../commandes/ls/ls.h"
 #include "stdlib.h"
 #include "stdio.h"
 //ENUM MODE : correspond au différent mode d'excécution d'une commande
