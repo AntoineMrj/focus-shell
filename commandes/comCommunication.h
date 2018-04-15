@@ -14,7 +14,8 @@ typedef enum e_outPutMode {
     NONE
 } e_outPutMode;
 char *logFile;
-FILE *outPutFile;
+FILE *outPutFileStd;
+FILE *outPutFileErr;
 e_outPutMode outPutMode;
 //Initialisation de la libraire
 //name = nom de la commande en cours

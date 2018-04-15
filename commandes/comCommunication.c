@@ -5,8 +5,11 @@
 void printOpen(const char *name)
 {
     char *temp_envFile = malloc(sizeof(char) * 1024);
+    char *stdName = malloc(sizeof(char) * 1024);
+    char *errName = malloc(sizeof(char) * 1024);
     logFile = NULL;
-    outPutFile = NULL;
+    outPutFileStd = NULL;
+    outPutFileErr = NULL;
     outPutMode = NONE;
     if ((temp_envFile = getenv("fcsShlOut")) != NULL)
     {
@@ -14,12 +17,18 @@ void printOpen(const char *name)
         {
             logFile = malloc(sizeof(char) * (strlen(name) + 6));
             sprintf(logFile, "./%s.out", name);
-            outPutFile = fopen(logFile, "w");
+            outPutFileStd = fopen(logFile, "w");
+            outPutFileErr = outPutFileStd;
             outPutMode = LOGFILE;
         }
         else
         {
-            outPutFile = fopen(temp_envFile, "w");
+            strcpy(stdName, temp_envFile);
+            strcpy(errName, temp_envFile);
+            strcat(stdName, "_std.out");
+            strcat(errName, "_err.out");
+            outPutFileStd = fopen(stdName, "w");
+            outPutFileErr = fopen(errName, "w");
             outPutMode = BASHFILE;
         }
     }
@@ -28,13 +37,15 @@ void printOpen(const char *name)
 
         outPutMode = CONSOLE;
     }
+    error = 0;
 }
 //Fermeture de la librairie
 void printClose()
 {
     if (outPutMode == BASHFILE || outPutMode == LOGFILE)
     {
-        fclose(outPutFile);
+        fclose(outPutFileStd);
+        fclose(outPutFileErr);
     }
 }
 int print(char *str, ...)
@@ -54,7 +65,37 @@ int print(char *str, ...)
         {
             char *temp = malloc(sizeof(char) * 256);
             vsprintf(temp, str, args);
-            fprintf(outPutFile, "%s", temp);
+            fprintf(outPutFileStd, "%s", temp);
+            free(temp);
+        }
+        va_end(args);
+    }
+    else
+    {
+        printf("Print output is not defined, have you initialise print with \"printOpen()\" ?");
+    }
+
+    return 0;
+}
+
+int printErr(char *str, ...)
+{
+
+    //print vers la console
+    if (outPutMode != NONE)
+    {
+        va_list args;
+        va_start(args, str);
+        if (outPutMode == CONSOLE)
+        {
+            vprintf(str, args);
+        }
+        //print vers des fichiers
+        else
+        {
+            char *temp = malloc(sizeof(char) * 256);
+            vsprintf(temp, str, args);
+            fprintf(outPutFileErr, "%s", temp);
             free(temp);
         }
         va_end(args);

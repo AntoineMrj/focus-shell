@@ -5,8 +5,10 @@ char *envVar = "fcsShlOut";
 char *envVarEmpty = "fcsShlOut=";
 
 char *channelEnvVar = NULL;
-char *channelFileName = NULL;
-char *outFileName = NULL;
+char *stdFileName = NULL;
+char *errFileName = NULL;
+char *channelFileNameStd = NULL;
+char *channelFileNameErr = NULL;
 
 char *cutDirectory(char *command)
 {
@@ -28,28 +30,40 @@ char *cutDirectory(char *command)
 //Initialise l'environment de communication du shell
 void initEnv(char *command)
 {
-    outFileName = malloc(sizeof(char) * 256);
+    stdFileName = malloc(sizeof(char) * 256);
+    errFileName = malloc(sizeof(char) * 256);
     channelEnvVar = malloc(sizeof(char) * 128);
-    channelFileName = malloc(sizeof(char) * 256);
+    channelFileNameStd = malloc(sizeof(char) * 256);
+    channelFileNameErr = malloc(sizeof(char) * 256);
     env[0] = (char *)malloc(sizeof(char) * 256);
+    char *tempName = malloc(sizeof(char) * 256);
+    char *pid = malloc(sizeof(char) * 256);
+    sprintf(pid, "%i", getpid());
     size_t size = 256;
 
     //Initialisation du nom du fichier de communication avec le pid du shell
     if (command[0] == '.')
     {
-        getcwd(channelFileName, size);
+        getcwd(channelFileNameStd, size);
     }
-    strcat(channelFileName, cutDirectory(command));
-    strcat(channelFileName, "/channel/");
-    sprintf(outFileName, "%i.out", getpid());
-    strcat(channelFileName, outFileName);
+    strcat(channelFileNameStd, cutDirectory(command));
+    strcat(channelFileNameStd, "/channel/");
+    strcpy(tempName, channelFileNameStd);
+    strcat(tempName, pid);
+    sprintf(stdFileName, "%i_std.out", getpid());
+    sprintf(errFileName, "%i_err.out", getpid());
+    strcpy(channelFileNameErr, channelFileNameStd);
+    strcat(channelFileNameStd, stdFileName);
+    strcat(channelFileNameErr, errFileName);
     //Initialisation de la variable d'environment
     strcat(channelEnvVar, envVar);
     strcat(channelEnvVar, "=");
-    strcat(channelEnvVar, channelFileName);
+    strcat(channelEnvVar, tempName);
 
     //Création du fichier de communication
-    FILE *channelFile = fopen(channelFileName, "a");
+    FILE *channelFile = fopen(channelFileNameStd, "a");
+    fclose(channelFile);
+    channelFile = fopen(channelFileNameErr, "a");
     fclose(channelFile);
 }
 char **getEnv()
@@ -83,19 +97,22 @@ void setEnvMode(e_envMode mode)
 //Fermeture de l'environment de communication en supprimant le fichier
 void closeEnvironment()
 {
-    remove(channelFileName);
+    remove(channelFileNameStd);
+    remove(channelFileNameErr);
 }
 //Récupère le contenu du fichier de communication
-char *readCommunication()
+char *readStd()
 {
     char *result = NULL;
     char *lineBuffer = (char *)malloc(sizeof(char) * 256);
     off_t sizeOfFile;
-    FILE *channelFile = fopen(channelFileName, "r");
+    FILE *channelFile = fopen(channelFileNameStd, "r");
 
     if (channelFile)
     {
         sizeOfFile = ftello(channelFile);
+        if (sizeOfFile == 0)
+            return NULL;
         fseek(channelFile, 0, SEEK_SET);
 
         result = (char *)malloc(sizeof(char) * sizeOfFile);
@@ -110,6 +127,36 @@ char *readCommunication()
     {
         printf("ERROR while reading channelFile, did you initialise the environment ?");
     }
-    // free(lineBuffer);
+    free(lineBuffer);
+    return result;
+}
+
+char *readErr()
+{
+    char *result = NULL;
+    char *lineBuffer = (char *)malloc(sizeof(char) * 256);
+    off_t sizeOfFile;
+    FILE *channelFile = fopen(channelFileNameErr, "r");
+
+    if (channelFile)
+    {
+        sizeOfFile = ftello(channelFile);
+        if (sizeOfFile == 0)
+            return NULL;
+        fseek(channelFile, 0, SEEK_SET);
+
+        result = (char *)malloc(sizeof(char) * sizeOfFile);
+
+        while ((fgets(lineBuffer, sizeof(lineBuffer), channelFile)))
+        {
+            strcat(result, lineBuffer);
+        }
+        fclose(channelFile);
+    }
+    else
+    {
+        printf("ERROR while reading channelFile, did you initialise the environment ?");
+    }
+    free(lineBuffer);
     return result;
 }

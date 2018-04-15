@@ -12,18 +12,15 @@ typedef enum e_envMode {
     BASHFILE
 } e_envMode;
 
-
-
 //Initialise l'environment de communication du shell
 void initEnv();
 //Choisit le mode de communication des résultats
 void setEnvMode(e_envMode mode);
 
-char** getEnv();
+char **getEnv();
 //Fermeture de l'environment de communication en supprimant le fichier
 void closeEnvironment();
 //Récupère le contenu du fichier de communication
-char *readCommunication();
-
-
+char *readStd();
+char *readErr();
 #endif
