@@ -1,6 +1,6 @@
 #include "linkedList.h"
 
-void add(commandList *list, cmdIdentifier function)
+void add(commandList *list, cmdIdentifier *function)
 {
   commandListCell *newCell = (commandListCell *)malloc(sizeof(commandListCell)); //allocation de la mémoire pour la nouvelle cellule
 
@@ -42,16 +42,16 @@ void freeList(commandList *list)
   list->head = NULL; //une fois la liste vide on réinitialise la tete et la queue
 }
 
-cmdFunction find(commandList list, char *name) //renvoie la fonction si elle est trouvée
+cmdFunction find(commandList *list, char *name) //renvoie la fonction si elle est trouvée
 {
-  commandListCell *currentFunction = list.head;
-  while (strcmp(name, currentFunction->function.name) && currentFunction->next != NULL)
+  commandListCell *currentFunction = list->head;
+  while (strcmp(name, currentFunction->function->name) && currentFunction->next != NULL)
   { //tant que la fonction n'a pas été trouvée et qu'on est pas à la fin de la liste
     currentFunction = currentFunction->next;
   }
-  if (!strcmp(name, currentFunction->function.name))
+  if (!strcmp(name, currentFunction->function->name))
   {                                            //si la fonction a été trouvée
-    return currentFunction->function.function; //retourne la commande
+    return currentFunction->function->function; //retourne la commande
   }
   else
   {
@@ -62,7 +62,7 @@ cmdFunction find(commandList list, char *name) //renvoie la fonction si elle est
 commandList *initList()
 {
   commandList *list = malloc(sizeof(commandList));
-  list.head = NULL;
+  list->head = NULL;
 
   return list;
 }
