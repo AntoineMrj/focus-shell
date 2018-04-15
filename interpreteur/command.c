@@ -73,6 +73,33 @@ int executeCommand(command *cmd)
     //Exécute une command selon son mode
 }
 
+//Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes
+commandList *initListCommands()
+{
+  //création d'une liste chainée
+  commandList *list = initList();
+
+  //déclaration du pointeur qui va contenir les fonctions une à une
+  int (*cmdFunction)(int argc, char *argv[]);
+
+  //création des cmdIdentifier
+  cmdIdentifier *newCmdIdentifier = malloc(sizeof(cmdIdentifier));
+  cmdFunction = ls;
+  newCmdIdentifier->function = cmdFunction;
+  newCmdIdentifier->name = "ls";
+
+  //ajout de la cellule
+  add(list, newCmdIdentifier);
+
+  /*
+  .
+  . On fait pareil pour chaque fonction, il faudra faire une boucle, j'attend de voir si ça marche avec 'ls'
+  .
+  */
+
+  return list;
+}
+
 //Fonction de test
 void printCommand(command *cmd)
 {

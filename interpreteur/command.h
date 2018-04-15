@@ -6,9 +6,10 @@
 #include "../commandes/ls/ls.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "linkedList.h"
 
 //prototype des fonction utiliser pour les commandes
-typedef int (*cmdFunction)(int argc, char *argv);
+typedef int (*cmdFunction)(int argc, char *argv[]);
 
 //ENUM MODE : correspond au différent mode d'excécution d'une commande
 typedef enum MODE {
@@ -23,6 +24,8 @@ typedef enum MODE {
     NONE
 } MODE;
 MODE findMODE(char *string);
+
+
 typedef struct command
 {
     char *name;
@@ -44,6 +47,9 @@ command *initCommand(char *name, int nbArg, char **arg, MODE mode);
 void cpCommand(command *destination, command *source);
 //Execute une commande cmd
 int executeCommand(command *cmd);
+
+//Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes
+commandList *initListCommands();
 
 //Fonction de test
 void printCommand(command *cmd);
