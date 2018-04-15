@@ -71,8 +71,6 @@ MODE findMODE(char *string)
 int executeCommand(command *cmd)
 {
     //Exécute une command selon son mode
-    //Récupération de son résultat dans un result
-    //retour du result
 }
 
 //Fonction de test

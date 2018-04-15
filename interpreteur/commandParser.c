@@ -68,12 +68,8 @@ int parse(commandParser *parser, command **cmd)
             {
                 strcpy(cmdName, buffer);
             }
-            //Le reste à ses arguments
-            else
-            {
-                argBUFFER[actualArg - 1] = malloc(sizeof(char) * 256);
-                strcpy(argBUFFER[actualArg - 1], buffer);
-            }
+            argBUFFER[actualArg - 1] = malloc(sizeof(char) * 256);
+            strcpy(argBUFFER[actualArg - 1], buffer);
             actualArg++;
         }
         else

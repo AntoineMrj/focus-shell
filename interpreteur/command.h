@@ -6,6 +6,10 @@
 #include "../commandes/ls/ls.h"
 #include "stdlib.h"
 #include "stdio.h"
+
+//prototype des fonction utiliser pour les commandes
+typedef int (*cmdFunction)(int argc, char *argv);
+
 //ENUM MODE : correspond au différent mode d'excécution d'une commande
 typedef enum MODE {
     DETACHEMENT,      // & DETACHMENT DU TERMINAL
