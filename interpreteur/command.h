@@ -1,15 +1,12 @@
 
 #ifndef COMMAND_H
 #define COMMAND_H
-#include "result.h"
-#include "string.h"
+#include <string.h>
 #include "../commandes/ls/ls.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "linkedList.h"
-
-//prototype des fonction utiliser pour les commandes
-typedef int (*cmdFunction)(int argc, char *argv[]);
+#include "commandFunction.h"
 
 //ENUM MODE : correspond au différent mode d'excécution d'une commande
 typedef enum MODE {
@@ -34,12 +31,7 @@ typedef struct command
     MODE mode;
 } command;
 
-//Structure identifiant une commande par une chaine de caractère
-typedef struct cmdIdentifier
-{
-    cmdFunction function;
-    char *name;
-} cmdIdentifier;
+
 
 //Initialise une command
 command *initCommand(char *name, int nbArg, char **arg, MODE mode);
@@ -49,8 +41,8 @@ void cpCommand(command *destination, command *source);
 int executeCommand(command *cmd);
 
 //Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes
-commandList *initListCommands();
-
+void initListCommands();
+struct commandList* cmdList;
 //Fonction de test
 void printCommand(command *cmd);
 

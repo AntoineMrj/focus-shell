@@ -70,26 +70,28 @@ MODE findMODE(char *string)
 //Execute une commande cmd
 int executeCommand(command *cmd)
 {
+    cmdFunction temp = find(cmdList,cmd->name);
+    temp(cmd->nbArg,cmd->arg);
     //Exécute une command selon son mode
 }
 
 //Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes
-commandList *initListCommands()
+void initListCommands()
 {
   //création d'une liste chainée
-  commandList *list = initList();
+  cmdList = initList();
 
   //déclaration du pointeur qui va contenir les fonctions une à une
-  int (*cmdFunction)(int argc, char *argv[]);
+  cmdFunction function;
 
   //création des cmdIdentifier
   cmdIdentifier *newCmdIdentifier = malloc(sizeof(cmdIdentifier));
-  cmdFunction = ls;
-  newCmdIdentifier->function = cmdFunction;
+  function = ls;
+  newCmdIdentifier->function = function;
   newCmdIdentifier->name = "ls";
 
   //ajout de la cellule
-  add(list, newCmdIdentifier);
+  add(cmdList, newCmdIdentifier);
 
   /*
   .
@@ -97,7 +99,7 @@ commandList *initListCommands()
   .
   */
 
-  return list;
+
 }
 
 //Fonction de test

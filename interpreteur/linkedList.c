@@ -11,7 +11,7 @@ void add(commandList *list, cmdIdentifier *function)
   }
 
   //creation de la Cellule
-  newCell->function = function;
+  newCell->function = *function;
   newCell->next = NULL; //On ajoute la cellule à la fin
 
   if (list->head == NULL)
@@ -45,13 +45,13 @@ void freeList(commandList *list)
 cmdFunction find(commandList *list, char *name) //renvoie la fonction si elle est trouvée
 {
   commandListCell *currentFunction = list->head;
-  while (strcmp(name, currentFunction->function->name) && currentFunction->next != NULL)
+  while (strcmp(name, currentFunction->function.name) && currentFunction->next != NULL)
   { //tant que la fonction n'a pas été trouvée et qu'on est pas à la fin de la liste
     currentFunction = currentFunction->next;
   }
-  if (!strcmp(name, currentFunction->function->name))
+  if (!strcmp(name, currentFunction->function.name))
   {                                            //si la fonction a été trouvée
-    return currentFunction->function->function; //retourne la commande
+    return currentFunction->function.function; //retourne la commande
   }
   else
   {

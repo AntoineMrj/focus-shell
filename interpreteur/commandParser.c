@@ -68,9 +68,10 @@ int parse(commandParser *parser, command **cmd)
             {
                 strcpy(cmdName, buffer);
             }
-            argBUFFER[actualArg - 1] = malloc(sizeof(char) * 256);
-            strcpy(argBUFFER[actualArg - 1], buffer);
+            argBUFFER[actualArg] = malloc(sizeof(char) * 256);
+            strcpy(argBUFFER[actualArg], buffer);
             actualArg++;
+
         }
         else
         {
@@ -81,6 +82,7 @@ int parse(commandParser *parser, command **cmd)
     {
         //Copie de la commande crée
         (*cmd) = initCommand(cmdName, actualArg - 1, argBUFFER, mode);
+        return 0;
     }
     else
     {

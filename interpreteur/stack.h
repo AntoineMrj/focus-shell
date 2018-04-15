@@ -6,7 +6,7 @@
 typedef struct commandStackCell
 {
   command cmd;
-  commandStackCell *next;
+  struct commandStackCell *next;
 }commandStackCell;
 
 

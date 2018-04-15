@@ -1,13 +1,21 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
-#include "stdlib.h"
+#include <stdlib.h>
+#include "commandFunction.h"
 #include "command.h"
+
+//Structure identifiant une commande par une chaine de caractère
+typedef struct cmdIdentifier
+{
+    cmdFunction function;
+    char *name;
+} cmdIdentifier;
 
 //Cellule d'une liste chainée
 typedef struct commandListCell
 {
     cmdIdentifier function;
-    commandListCell *next;
+    struct commandListCell *next;
 } commandListCell;
 
 //Liste chainée
