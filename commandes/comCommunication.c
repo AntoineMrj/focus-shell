@@ -16,7 +16,7 @@ void printOpen(const char *name)
         if (strcmp(temp_envFile, "") == 0)
         {
             logFile = malloc(sizeof(char) * (strlen(name) + 6));
-            sprintf(logFile, "./%s.out", name);
+            sprintf(logFile, "/temp/%s.out", name);
             outPutFileStd = fopen(logFile, "w");
             outPutFileErr = outPutFileStd;
             outPutMode = LOGFILE;
@@ -45,7 +45,8 @@ void printClose()
     if (outPutMode == BASHFILE || outPutMode == LOGFILE)
     {
         fclose(outPutFileStd);
-        fclose(outPutFileErr);
+        if (outPutMode == BASHFILE)
+            fclose(outPutFileErr);
     }
 }
 int print(char *str, ...)
