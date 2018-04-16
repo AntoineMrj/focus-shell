@@ -15,7 +15,7 @@ $(EXEC):  $(objectDir)main.o $(OBJ) $(objectDir)ls.o
 
 
 $(objectDir)main.o: main.c $(Interpreteur)commandEntry.h
-
+	gcc -o $@ -c $< -W -Wall
 $(objectDir)stack.o:  $(Interpreteur)stack.c $(Interpreteur)command.h
 	gcc -o $@ -c $< -W -Wall
 $(objectDir)queue.o:  $(Interpreteur)queue.c $(Interpreteur)command.h
