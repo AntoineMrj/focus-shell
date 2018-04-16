@@ -70,36 +70,41 @@ MODE findMODE(char *string)
 //Execute une commande cmd
 int executeCommand(command *cmd)
 {
-    cmdFunction temp = find(cmdList,cmd->name);
-    temp(cmd->nbArg,cmd->arg);
+    cmdFunction temp = find(cmdList, cmd->name);
+    if (temp != NULL)
+    {
+        temp(cmd->nbArg, cmd->arg);
+    }
+    else
+    {
+        printf("ERREUR : cette commande n'existe pas\n");
+    }
     //Exécute une command selon son mode
 }
 
 //Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes
 void initListCommands()
 {
-  //création d'une liste chainée
-  cmdList = initList();
+    //création d'une liste chainée
+    cmdList = initList();
 
-  //déclaration du pointeur qui va contenir les fonctions une à une
-  cmdFunction function;
+    //déclaration du pointeur qui va contenir les fonctions une à une
+    cmdFunction function;
 
-  //création des cmdIdentifier
-  cmdIdentifier *newCmdIdentifier = malloc(sizeof(cmdIdentifier));
-  function = ls;
-  newCmdIdentifier->function = function;
-  newCmdIdentifier->name = "ls";
+    //création des cmdIdentifier
+    cmdIdentifier *newCmdIdentifier = malloc(sizeof(cmdIdentifier));
+    function = ls;
+    newCmdIdentifier->function = function;
+    newCmdIdentifier->name = "ls";
 
-  //ajout de la cellule
-  add(cmdList, newCmdIdentifier);
+    //ajout de la cellule
+    add(cmdList, newCmdIdentifier);
 
-  /*
+    /*
   .
   . On fait pareil pour chaque fonction, il faudra faire une boucle, j'attend de voir si ça marche avec 'ls'
   .
   */
-
-
 }
 
 //Fonction de test

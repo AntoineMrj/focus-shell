@@ -7,6 +7,7 @@ commandParser *setParser(char *chaine)
     commandParser *temp = malloc(sizeof(commandParser));
     temp->actualPosition = 0;
     temp->chaine = chaine;
+    //temp->chaine = "test a b c";
     temp->state = WAIT;
     temp->hasEnded = 0;
     return temp;
@@ -37,12 +38,11 @@ int parse(commandParser *parser, command **cmd)
     MODE mode;
     //Variable de parcours de la chaine
     char actualChar = 'X';
-    while (actualChar != '\0')
+    while (actualChar != '\n' && actualChar != '\0')
     {
         //Ignore les espaces
         while ((actualChar = getActualChar(parser)) == ' ')
             ;
-
         //Initialisation du buffer
         buffer[0] = '\0';
         bufferPosition = 0;
@@ -71,7 +71,6 @@ int parse(commandParser *parser, command **cmd)
             argBUFFER[actualArg] = malloc(sizeof(char) * 256);
             strcpy(argBUFFER[actualArg], buffer);
             actualArg++;
-
         }
         else
         {
@@ -81,13 +80,13 @@ int parse(commandParser *parser, command **cmd)
     if (actualArg > 0)
     {
         //Copie de la commande crée
-        (*cmd) = initCommand(cmdName, actualArg - 1, argBUFFER, mode);
-        return 0;
+        (*cmd) = initCommand(cmdName, actualArg, argBUFFER, mode);
+        return 1;
     }
     else
     {
         //ERREUR
-        return 2;
+        return 0;
     }
-    return 1;
+    return 2;
 }
