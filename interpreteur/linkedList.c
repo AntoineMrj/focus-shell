@@ -49,13 +49,13 @@ cmdFunction find(commandList *list, char *name) //renvoie la fonction si elle es
   { //tant que la fonction n'a pas été trouvée et qu'on est pas à la fin de la liste
     currentFunction = currentFunction->next;
   }
-  if (!strcmp(name, currentFunction->function.name) == 0)
+  if (strcmp(name, currentFunction->function.name) == 0)
   {                                            //si la fonction a été trouvée
     return currentFunction->function.function; //retourne la commande
   }
   else
   {
-    return 0; //A modifier, il faudrait renvoyer un message comme quoi la fonction n'existe pas ou une commande d'erreur
+    return NULL; //A modifier, il faudrait renvoyer un message comme quoi la fonction n'existe pas ou une commande d'erreur
   }
 }
 
