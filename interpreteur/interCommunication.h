@@ -5,22 +5,29 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
-
+#include <sys/types.h>
 typedef enum e_envMode {
     CONSOLE,
     LOGFILE,
     BASHFILE
 } e_envMode;
-
 //Initialise l'environment de communication du shell
 void initEnv();
 //Choisit le mode de communication des résultats
 void setEnvMode(e_envMode mode);
-
 char **getEnv();
-//Fermeture de l'environment de communication en supprimant le fichier
+//Fermeture de l'environment de communication en supprimant les fichiers
 void closeEnvironment();
 //Récupère le contenu du fichier de communication
-char *readStd();
-char *readErr();
+char *getStd();
+char *getErr();
+void readStd();
+void readErr();
+int hasErr();
+int hasStd();
+
+void flushStd();
+void flushErr();
+void flush();
+
 #endif

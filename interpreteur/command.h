@@ -3,8 +3,8 @@
 #define COMMAND_H
 #include <string.h>
 #include "commandIncluder.h"
-#include "stdlib.h"
-#include "stdio.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include "linkedList.h"
 #include "commandFunction.h"
 

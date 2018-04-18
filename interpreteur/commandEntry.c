@@ -5,11 +5,12 @@ int commandLine()
 {
     const size_t entrySize = 64;
     char *entry = malloc(sizeof(char) * entrySize); //Commande de l'utilsateur
-    char *out;
     //Retour de l'analyse
     //Nettoyage du terminal
-    initListCommands();
     system("clear");
+    initEnv();
+    setEnvMode(BASHFILE);
+    initListCommands();
     //Tant que l'utilisateur ne quitte pas le terminal
     do
     {
@@ -20,6 +21,7 @@ int commandLine()
         //Envoit des commandes utilisateurs à
         analyse(entry);
     } while (1);
+    closeEnvironment();
     return 0;
 }
 void printHead()

@@ -10,27 +10,33 @@ OBJ= $(objectDir)main.o $(objectDir)stack.o $(objectDir)queue.o $(objectDir)link
 all: $(EXEC)
 
 
-$(EXEC):  $(objectDir)main.o $(OBJ) $(objectDir)ls.o $(objectDir)cat.o $(objectDir)echo.o $(objectDir)rm.o $(objectDir)pwd.o $(objectDir)cp.o
+$(EXEC):  $(objectDir)main.o $(OBJ) $(objectDir)ls.o $(objectDir)cat.o $(objectDir)echo.o $(objectDir)rm.o $(objectDir)pwd.o $(objectDir)cp.o $(objectDir)comCommunication.o $(objectDir)interCommunication.o
 	gcc -o $(EXEC) $^
 
 
 #Interpreteur
 $(objectDir)main.o: main.c
 	gcc -o $@ -c $< -W -Wall
-$(objectDir)stack.o:  $(Interpreteur)stack.c $(Interpreteur)command.h
+$(objectDir)stack.o:  $(Interpreteur)stack.c
 	gcc -o $@ -c $< -W -Wall
-$(objectDir)queue.o:  $(Interpreteur)queue.c $(Interpreteur)command.h
+$(objectDir)queue.o:  $(Interpreteur)queue.c 
 	gcc -o $@ -c $< -W -Wall
-$(objectDir)linkedList.o:  $(Interpreteur)linkedList.c $(Interpreteur)command.h $(Interpreteur)commandFunction.h 
+$(objectDir)linkedList.o:  $(Interpreteur)linkedList.c
 	gcc -o $@ -c $< -W -Wall
-$(objectDir)commandParser.o:  $(Interpreteur)commandParser.c $(Interpreteur)command.h
+$(objectDir)commandParser.o:  $(Interpreteur)commandParser.c
 	gcc -o $@ -c $< -W -Wall
-$(objectDir)commandManager.o:  $(Interpreteur)commandManager.c $(Interpreteur)command.h
+$(objectDir)commandManager.o:  $(Interpreteur)commandManager.c 
 	gcc -o $@ -c $< -W -Wall
-$(objectDir)commandEntry.o:  $(Interpreteur)commandEntry.c $(Interpreteur)commandManager.h
+$(objectDir)commandEntry.o:  $(Interpreteur)commandEntry.c
+	gcc -o $@ -c $< -W -Wall
+
+$(objectDir)interCommunication.o:  $(Interpreteur)interCommunication.c
 	gcc -o $@ -c $< -W -Wall
 
 #Commandes
+$(objectDir)comCommunication.o:  $(Commande)comCommunication.c
+	gcc -o $@ -c $< -W -Wall
+
 $(objectDir)ls.o:  $(Commande)ls/ls.c 
 	gcc -o $@ -c $< -W -Wall
 
@@ -50,7 +56,7 @@ $(objectDir)pwd.o:  $(Commande)pwd/pwd.c
 	gcc -o $@ -c $< -W -Wall
 	
 
-$(objectDir)command.o:  $(Interpreteur)command.c $(Interpreteur)linkedList.h $(Interpreteur)commandFunction.h $(Commande)ls/ls.h
+$(objectDir)command.o:  $(Interpreteur)command.c
 	gcc -o $@ -c $< -W -Wall
 
 

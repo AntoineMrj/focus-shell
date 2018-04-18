@@ -1,5 +1,4 @@
 #include "interCommunication.h"
-
 char *env[] = {NULL, NULL};
 char *envVar = "fcsShlOut";
 char *envVarEmpty = "fcsShlOut=";
@@ -7,63 +6,30 @@ char *envVarEmpty = "fcsShlOut=";
 char *channelEnvVar = NULL;
 char *stdFileName = NULL;
 char *errFileName = NULL;
-char *channelFileNameStd = NULL;
-char *channelFileNameErr = NULL;
-
-char *cutDirectory(char *command)
-{
-    int i = 0;
-    int buffPosition = 0;
-    char *buff = malloc(sizeof(char) * 50);
-    char *out = malloc(sizeof(char) * 50);
-    if (command[0] == '/')
-        buff[buffPosition++] = command[i];
-    while ((command[i++]) != '\0')
-    {
-        buff[buffPosition++] = command[i];
-        if (command[i] == '/')
-            strcpy(out, buff);
-    }
-    return out;
-}
-
 //Initialise l'environment de communication du shell
-void initEnv(char *command)
+void initEnv()
 {
     stdFileName = malloc(sizeof(char) * 256);
     errFileName = malloc(sizeof(char) * 256);
     channelEnvVar = malloc(sizeof(char) * 128);
-    channelFileNameStd = malloc(sizeof(char) * 256);
-    channelFileNameErr = malloc(sizeof(char) * 256);
+    char *temp = malloc(sizeof(char) * 32);
     env[0] = (char *)malloc(sizeof(char) * 256);
-    char *tempName = malloc(sizeof(char) * 256);
+
     char *pid = malloc(sizeof(char) * 256);
+
     sprintf(pid, "%i", getpid());
-    size_t size = 256;
 
-    //Initialisation du nom du fichier de communication avec le pid du shell
-    if (command[0] == '.')
-    {
-        getcwd(channelFileNameStd, size);
-    }
-    strcat(channelFileNameStd, cutDirectory(command));
-    strcat(channelFileNameStd, "/channel/");
-    strcpy(tempName, channelFileNameStd);
-    strcat(tempName, pid);
-    sprintf(stdFileName, "%i_std.out", getpid());
-    sprintf(errFileName, "%i_err.out", getpid());
-    strcpy(channelFileNameErr, channelFileNameStd);
-    strcat(channelFileNameStd, stdFileName);
-    strcat(channelFileNameErr, errFileName);
+    sprintf(stdFileName, "/tmp/%s/std.out", pid);
+    sprintf(errFileName, "/tmp/%s/err.out", pid);
+    sprintf(temp, "/tmp/%s", pid);
+    mkdir(temp, ACCESSPERMS);
     //Initialisation de la variable d'environment
-    strcat(channelEnvVar, envVar);
-    strcat(channelEnvVar, "=");
-    strcat(channelEnvVar, tempName);
-
+    strcat(channelEnvVar, envVarEmpty);
+    strcat(channelEnvVar, pid);
     //Création du fichier de communication
-    FILE *channelFile = fopen(channelFileNameStd, "a");
+    FILE *channelFile = fopen(stdFileName, "a");
     fclose(channelFile);
-    channelFile = fopen(channelFileNameErr, "a");
+    channelFile = fopen(errFileName, "a");
     fclose(channelFile);
 }
 char **getEnv()
@@ -97,66 +63,103 @@ void setEnvMode(e_envMode mode)
 //Fermeture de l'environment de communication en supprimant le fichier
 void closeEnvironment()
 {
-    remove(channelFileNameStd);
-    remove(channelFileNameErr);
+    remove(stdFileName);
+    remove(errFileName);
+}
+int sizeOfFile(char *file)
+{
+    int sizeF;
+    FILE *channelFile = fopen(file, "r");
+    if (channelFile)
+    {
+        fseek(channelFile, 0L, SEEK_END);
+        sizeF = ftell(channelFile);
+        rewind(channelFile);
+        fclose(channelFile);
+    }
+    else
+    {
+        printf("ERROR while reading channelFile, did you initialise the environment ?");
+    }
+    return sizeF;
+}
+void readFile(char *file)
+{
+    char *lineBuffer = (char *)malloc(sizeof(char) * 256);
+    FILE *channelFile = fopen(file, "r");
+    if (channelFile)
+    {
+        while ((fgets(lineBuffer, sizeof(lineBuffer), channelFile)))
+        {
+            printf("%s", lineBuffer);
+        }
+        fclose(channelFile);
+    }
+    else
+    {
+        printf("ERROR while reading channelFile, did you initialise the environment ?");
+    }
+    free(lineBuffer);
+}
+char *getFile(char *file)
+{
+    char *result = NULL;
+    char *lineBuffer = (char *)malloc(sizeof(char) * 256);
+    FILE *channelFile = fopen(file, "r");
+    if (channelFile)
+    {
+        fseek(channelFile, 0L, SEEK_END);
+        int sizeF = ftell(channelFile);
+        rewind(channelFile);
+        result = calloc(sizeF, sizeof(char));
+        while ((fgets(lineBuffer, sizeof(lineBuffer), channelFile)))
+        {
+            strcat(result, lineBuffer);
+        }
+        fclose(channelFile);
+    }
+    else
+    {
+        printf("ERROR while reading channelFile, did you initialise the environment ?");
+    }
+    free(lineBuffer);
+    return result;
 }
 //Récupère le contenu du fichier de communication
-char *readStd()
+char *getStd()
 {
-    char *result = NULL;
-    char *lineBuffer = (char *)malloc(sizeof(char) * 256);
-    off_t sizeOfFile;
-    FILE *channelFile = fopen(channelFileNameStd, "r");
-
-    if (channelFile)
-    {
-        sizeOfFile = ftello(channelFile);
-        if (sizeOfFile == 0)
-            return NULL;
-        fseek(channelFile, 0, SEEK_SET);
-
-        result = (char *)malloc(sizeof(char) * sizeOfFile);
-
-        while ((fgets(lineBuffer, sizeof(lineBuffer), channelFile)))
-        {
-            strcat(result, lineBuffer);
-        }
-        fclose(channelFile);
-    }
-    else
-    {
-        printf("ERROR while reading channelFile, did you initialise the environment ?");
-    }
-    free(lineBuffer);
-    return result;
+    return getFile(stdFileName);
 }
 
-char *readErr()
+char *getErr()
 {
-    char *result = NULL;
-    char *lineBuffer = (char *)malloc(sizeof(char) * 256);
-    off_t sizeOfFile;
-    FILE *channelFile = fopen(channelFileNameErr, "r");
+    return getFile(errFileName);
+}
+//Récupère le contenu du fichier de communication
+void readStd()
+{
+    readFile(stdFileName);
+}
 
-    if (channelFile)
-    {
-        sizeOfFile = ftello(channelFile);
-        if (sizeOfFile == 0)
-            return NULL;
-        fseek(channelFile, 0, SEEK_SET);
-
-        result = (char *)malloc(sizeof(char) * sizeOfFile);
-
-        while ((fgets(lineBuffer, sizeof(lineBuffer), channelFile)))
-        {
-            strcat(result, lineBuffer);
-        }
-        fclose(channelFile);
-    }
-    else
-    {
-        printf("ERROR while reading channelFile, did you initialise the environment ?");
-    }
-    free(lineBuffer);
-    return result;
+void readErr()
+{
+    readFile(errFileName);
+}
+int hasStd()
+{
+    return sizeOfFile(stdFileName);
+}
+int hasErr()
+{
+    return sizeOfFile(errFileName);
+}
+void flushFile(char *file)
+{
+    FILE *channelFile = fopen(file, "w");
+    fclose(channelFile);
+}
+void flush()
+{
+    flushFile(stdFileName);
+    flushFile(errFileName);
 }

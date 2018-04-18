@@ -1,110 +1,120 @@
 #include "comCommunication.h"
 
 //Initialisation de la libraire
-//name = nom de la commande en cours
-void printOpen(const char *name)
+e_outPutMode getOutPutMode()
 {
+    e_outPutMode ret = CONSOLE_MODE;
     char *temp_envFile = malloc(sizeof(char) * 1024);
-    char *stdName = malloc(sizeof(char) * 1024);
-    char *errName = malloc(sizeof(char) * 1024);
-    logFile = NULL;
-    outPutFileStd = NULL;
-    outPutFileErr = NULL;
-    outPutMode = NONE;
     if ((temp_envFile = getenv("fcsShlOut")) != NULL)
     {
         if (strcmp(temp_envFile, "") == 0)
         {
-            logFile = malloc(sizeof(char) * (strlen(name) + 6));
-            sprintf(logFile, "/temp/%s.out", name);
-            outPutFileStd = fopen(logFile, "w");
-            outPutFileErr = outPutFileStd;
-            outPutMode = LOGFILE;
+            ret = LOGFILE_MODE;
         }
         else
         {
-            strcpy(stdName, temp_envFile);
-            strcpy(errName, temp_envFile);
-            strcat(stdName, "_std.out");
-            strcat(errName, "_err.out");
-            outPutFileStd = fopen(stdName, "w");
-            outPutFileErr = fopen(errName, "w");
-            outPutMode = BASHFILE;
+            ret = BASHFILE_MODE;
         }
     }
-    else
-    {
-
-        outPutMode = CONSOLE;
-    }
-    error = 0;
+    return ret;
 }
-//Fermeture de la librairie
-void printClose()
+FILE *getStdFile()
 {
-    if (outPutMode == BASHFILE || outPutMode == LOGFILE)
+    char *temp_envFile = malloc(sizeof(char) * 1024);
+    e_outPutMode outMode = getOutPutMode();
+    FILE *fp;
+    temp_envFile = getenv("fcsShlOut");
+
+    if (outMode == LOGFILE_MODE)
     {
-        fclose(outPutFileStd);
-        if (outPutMode == BASHFILE)
-            fclose(outPutFileErr);
+        char *pid = malloc(sizeof(char) * 256);
+        char *logFile = malloc(sizeof(char) * 256);
+        sprintf(pid, "%i", getpid());
+        sprintf(logFile, "/tmp/%s.out", pid);
+        fp = fopen(logFile, "aw");
+        return fp;
     }
+    else if (outMode == BASHFILE_MODE)
+    {
+        char *stdName = malloc(sizeof(char) * 1024);
+        sprintf(stdName, "/tmp/%s/std.out", temp_envFile);
+        fp = fopen(stdName, "a");
+        return fp;
+    }
+
+    return NULL;
 }
+FILE *getErrFile()
+{
+    char *temp_envFile = malloc(sizeof(char) * 1024);
+    e_outPutMode outMode = getOutPutMode();
+    FILE *fp;
+    temp_envFile = getenv("fcsShlOut");
+
+    if (outMode == LOGFILE_MODE)
+    {
+        char *pid = malloc(sizeof(char) * 256);
+        char *logFile = malloc(sizeof(char) * 256);
+        sprintf(pid, "%i", getpid());
+        sprintf(logFile, "/tmp/%s.out", pid);
+        fp = fopen(logFile, "a");
+        return fp;
+    }
+    else if (outMode == BASHFILE_MODE)
+    {
+        char *errName = malloc(sizeof(char) * 256);
+        sprintf(errName, "/tmp/%s/err.out", temp_envFile);
+        fp = fopen(errName, "a");
+        return fp;
+    }
+
+    return NULL;
+}
+
 int print(char *str, ...)
 {
-
     //print vers la console
-    if (outPutMode != NONE)
+    FILE *fp;
+    va_list args;
+    va_start(args, str);
+    if ((fp = getStdFile()) == NULL)
     {
-        va_list args;
-        va_start(args, str);
-        if (outPutMode == CONSOLE)
-        {
-            vprintf(str, args);
-        }
-        //print vers des fichiers
-        else
-        {
-            char *temp = malloc(sizeof(char) * 256);
-            vsprintf(temp, str, args);
-            fprintf(outPutFileStd, "%s", temp);
-            free(temp);
-        }
-        va_end(args);
+        vprintf(str, args);
     }
+    //print vers des fichiers
     else
     {
-        printf("Print output is not defined, have you initialise print with \"printOpen()\" ?");
+        char *temp = malloc(sizeof(char) * 256);
+        vsprintf(temp, str, args);
+        fprintf(fp, "%s", temp);
+        free(temp);
+        fclose(fp);
     }
+    va_end(args);
 
     return 0;
 }
 
 int printErr(char *str, ...)
 {
-
     //print vers la console
-    if (outPutMode != NONE)
+    FILE *fp;
+    va_list args;
+    va_start(args, str);
+    if ((fp = getErrFile()) == NULL)
     {
-        va_list args;
-        va_start(args, str);
-        if (outPutMode == CONSOLE)
-        {
-            vprintf(str, args);
-        }
-        //print vers des fichiers
-        else
-        {
-            char *temp = malloc(sizeof(char) * 256);
-            vsprintf(temp, str, args);
-            fprintf(outPutFileErr, "%s", temp);
-            free(temp);
-        }
-        va_end(args);
+        vprintf(str, args);
     }
+    //print vers des fichiers
     else
     {
-        printf("Print output is not defined, have you initialise print with \"printOpen()\" ?");
+        char *temp = malloc(sizeof(char) * 256);
+        vsprintf(temp, str, args);
+        fprintf(fp, "%s", temp);
+        free(temp);
+        fclose(fp);
     }
+    va_end(args);
 
     return 0;
 }

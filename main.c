@@ -1,6 +1,6 @@
 #include "./interpreteur/commandEntry.h"
 
-int main(int argc, char *argv[])
+int main()
 {
     //Lancement de la console et de son affichage
     return commandLine();

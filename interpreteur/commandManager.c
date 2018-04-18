@@ -12,6 +12,8 @@ void analyse(char *argv)
     {
         returnHandler = executeCommand(cmd);
     }
+    printf("%s", getStd());
+    flush();
     //Vérification de l'erreur
     if (returnHandler == 2)
     {
