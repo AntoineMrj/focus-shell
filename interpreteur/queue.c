@@ -6,23 +6,39 @@ void pushQ(commandQueue *queue, command *cmd) //ajoute la commande en tête de q
   commandQueueCell * newCell = malloc(sizeof(commandQueueCell)); //création de la nouvelle cellule
   newCell->cmd = *cmd;
   newCell->next = queue->head; //chainage avant
+
+  if(queue->head != NULL) //si la queue est non vide
+  {
+    queue->head->prev = newCell; //chainage arrière de la tête
+  }
+
   queue->head = newCell; //actualisation de la nouvelle tête
 }
 
-command* popQ(commandQueue *queue)
+command popQ(commandQueue *queue) //on peut faire plus propre avec une liste doublement chainée
 {
+  command cmd; //sert à stocker la command à pop
   commandQueueCell *currentCell = queue->head;
 
-  while(currentCell->next->next != NULL) //on va à l'avant dernière cellule de la queue
-  {
-    currentCell = currentCell->next;
-  }
+  if(currentCell == NULL) return cmd; //la queue est vide /!\ Renvoyer NULL ne marche pas HELP /!\ 
 
-  command *cmd = &(currentCell->next->cmd); //on recupère la commande de la dernière cellule
-  commandQueueCell *tmp;
-  tmp = currentCell->next; //dernière cellule
-  currentCell->next = NULL; //l'avant dernière cellule devient la dernière cellule
-  free(tmp); //on libère l'espace mémoire de la cellule qu'on vient de dépiler
+  else //plus de 2 cellules
+  {
+    while(currentCell->next != NULL) //on va à la dernière cellule de la queue
+    {
+      currentCell = currentCell->next;
+    }
+    cmd = currentCell->cmd; //on recupère la commande de la dernière cellule
+    if(currentCell == queue->head) //si il n'y a qu'une seule cellule dans la queue
+    {
+      queue->head = NULL;
+    }
+    else
+    {
+      currentCell->prev->next = NULL; //l'avant dernière cellule devient la dernière cellule
+      free(currentCell); //on libère l'espace mémoire de la cellule qu'on vient de dépiler
+    }
+  }
 
   return cmd;
 }

@@ -6,6 +6,7 @@
 typedef struct commandQueueCell
 {
   command cmd;
+  struct commandQueueCell *prev;
   struct commandQueueCell *next;
 }commandQueueCell;
 
@@ -16,7 +17,7 @@ typedef struct commandQueue
 }commandQueue;
 
 void pushQ(commandQueue *queue, command *cmd);
-command* popQ(commandQueue *queue);
+command popQ(commandQueue *queue);
 commandQueue *initQueue(); //retourne une queue vide
 
 #endif
