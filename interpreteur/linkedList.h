@@ -14,7 +14,7 @@ typedef struct cmdIdentifier
 //Cellule d'une liste chainée
 typedef struct commandListCell
 {
-    cmdIdentifier function;
+    cmdIdentifier *function;
     struct commandListCell *next;
 } commandListCell;
 
@@ -37,5 +37,7 @@ cmdFunction find(commandList *list, char *name);
 
 //Retourne un pointeur vers une liste vide
 commandList *initList();
+//Ajoute un cmdIdentifieur à la liste en l'initialisant avec le nom et la fonction passé en paramètre
+void addCmdIdentifier(commandList *list, char *name, cmdFunction function);
 
 #endif

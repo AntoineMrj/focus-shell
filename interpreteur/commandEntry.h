@@ -12,6 +12,6 @@
 #define RESET "\x1B[0m"
 //Fonction de base d'entré de l'utilisateur
 int commandLine();
-int printHead();
+void printHead();
 
 #endif

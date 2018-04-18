@@ -11,7 +11,7 @@ void add(commandList *list, cmdIdentifier *function)
   }
 
   //creation de la Cellule
-  newCell->function = *function;
+  newCell->function = function;
   newCell->next = NULL; //On ajoute la cellule à la fin
 
   if (list->head == NULL)
@@ -45,18 +45,17 @@ void freeList(commandList *list)
 cmdFunction find(commandList *list, char *name) //renvoie la fonction si elle est trouvée
 {
   commandListCell *currentFunction = list->head;
-  while (strcmp(name, currentFunction->function.name) != 0 && currentFunction->next != NULL)
-  { //tant que la fonction n'a pas été trouvée et qu'on est pas à la fin de la liste
+  while (currentFunction != NULL && strcmp(name, currentFunction->function->name) != 0)
+  {
+    //tant que la fonction n'a pas été trouvée et qu'on est pas à la fin de la liste
     currentFunction = currentFunction->next;
   }
-  if (!strcmp(name, currentFunction->function.name) == 0)
-  {                                            //si la fonction a été trouvée
-    return currentFunction->function.function; //retourne la commande
-  }
-  else
+  if (currentFunction != NULL)
   {
-    return 0; //A modifier, il faudrait renvoyer un message comme quoi la fonction n'existe pas ou une commande d'erreur
+    //si la fonction a été trouvée
+    return currentFunction->function->function; //retourne la commande
   }
+  return NULL;
 }
 
 commandList *initList()
@@ -65,4 +64,15 @@ commandList *initList()
   list->head = NULL;
 
   return list;
+}
+
+void addCmdIdentifier(commandList *list, char *name, cmdFunction function)
+{
+  //déclaration du pointeur qui va contenir les fonctions une à une
+  //création des cmdIdentifier
+  cmdIdentifier *newCmdIdentifier = malloc(sizeof(cmdIdentifier));
+  newCmdIdentifier->function = function;
+  newCmdIdentifier->name = name;
+  //ajout de la cellule
+  add(list, newCmdIdentifier);
 }

@@ -41,14 +41,14 @@ int parse(commandParser *parser, command **cmd)
     while (actualChar != '\n' && actualChar != '\0')
     {
         //Ignore les espaces
-        while ((actualChar = getActualChar(parser)) == ' ')
+        while ((actualChar = getActualChar(parser)) == ' ' && actualChar == '\n' && actualChar != '\0' && actualChar == '\t')
             ;
         //Initialisation du buffer
         buffer[0] = '\0';
         bufferPosition = 0;
         do
         {
-            if (actualChar == '\0')
+            if (actualChar == '\0' || actualChar == '\n' || actualChar == '\t')
             {
                 parser->hasEnded = 1;
                 break;
@@ -61,7 +61,7 @@ int parse(commandParser *parser, command **cmd)
         //Récupération du mode
         mode = findMODE(buffer);
         //Si la chaine ne correspond pas à un mode et quelle n'est pas vide
-        if (mode == NONE && bufferPosition > 0)
+        if (mode == NONE && bufferPosition > 0 && buffer[0] != '\0')
         {
             //Assignation de la première chaine au nom de la commande
             if (actualArg == 0)

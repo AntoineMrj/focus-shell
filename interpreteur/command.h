@@ -2,7 +2,7 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 #include <string.h>
-#include "../commandes/ls/ls.h"
+#include "commandIncluder.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "linkedList.h"
@@ -22,7 +22,6 @@ typedef enum MODE {
 } MODE;
 MODE findMODE(char *string);
 
-
 typedef struct command
 {
     char *name;
@@ -30,8 +29,6 @@ typedef struct command
     char **arg;
     MODE mode;
 } command;
-
-
 
 //Initialise une command
 command *initCommand(char *name, int nbArg, char **arg, MODE mode);
@@ -42,7 +39,7 @@ int executeCommand(command *cmd);
 
 //Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes
 void initListCommands();
-struct commandList* cmdList;
+struct commandList *cmdList;
 //Fonction de test
 void printCommand(command *cmd);
 

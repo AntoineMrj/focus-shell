@@ -22,10 +22,10 @@ int cat(int argc, char *argv[])
       {
         printf("%s", ligne);
       }
+      printf("\n");
     }
 
     fclose(fichier);
   }
-
   return (0);
 }

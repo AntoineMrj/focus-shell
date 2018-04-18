@@ -74,10 +74,12 @@ int executeCommand(command *cmd)
     if (temp != NULL)
     {
         temp(cmd->nbArg, cmd->arg);
+        return 1;
     }
     else
     {
         printf("ERREUR : cette commande n'existe pas\n");
+        return 0;
     }
     //Exécute une command selon son mode
 }
@@ -87,24 +89,12 @@ void initListCommands()
 {
     //création d'une liste chainée
     cmdList = initList();
-
-    //déclaration du pointeur qui va contenir les fonctions une à une
-    cmdFunction function;
-
-    //création des cmdIdentifier
-    cmdIdentifier *newCmdIdentifier = malloc(sizeof(cmdIdentifier));
-    function = ls;
-    newCmdIdentifier->function = function;
-    newCmdIdentifier->name = "ls";
-
-    //ajout de la cellule
-    add(cmdList, newCmdIdentifier);
-
-    /*
-  .
-  . On fait pareil pour chaque fonction, il faudra faire une boucle, j'attend de voir si ça marche avec 'ls'
-  .
-  */
+    addCmdIdentifier(cmdList, "ls", ls);
+    addCmdIdentifier(cmdList, "cat", cat);
+    addCmdIdentifier(cmdList, "rm", rm);
+    addCmdIdentifier(cmdList, "echo", echo);
+    addCmdIdentifier(cmdList, "pwd", pwd);
+    addCmdIdentifier(cmdList, "cp", cp);
 }
 
 //Fonction de test

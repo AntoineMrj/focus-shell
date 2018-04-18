@@ -5,7 +5,8 @@ int commandLine()
 {
     const size_t entrySize = 64;
     char *entry = malloc(sizeof(char) * entrySize); //Commande de l'utilsateur
-    char *out;                                      //Retour de l'analyse
+    char *out;
+    //Retour de l'analyse
     //Nettoyage du terminal
     initListCommands();
     system("clear");
@@ -21,17 +22,16 @@ int commandLine()
     } while (1);
     return 0;
 }
-int printHead()
+void printHead()
 {
     struct passwd *pw;
 
     char *currentDir = malloc(sizeof(char) * 256);
-    char *currentUser;
 
     pw = getpwuid(getuid());
     getcwd(currentDir, 256);
 
-    printf(GRN "\n%s", pw->pw_name);
+    printf(GRN "%s", pw->pw_name);
     printf(WHT ":");
     printf(BLU "%s", currentDir);
     printf(RESET);

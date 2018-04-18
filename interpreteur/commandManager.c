@@ -1,7 +1,7 @@
 #include "commandManager.h"
 
 //Envoit la chaine de caractère à un parser pour l'analyser
-void *analyse(char *argv)
+void analyse(char *argv)
 {
     //Lancement de la console et de son affichage
     //return commandLine();
@@ -10,7 +10,7 @@ void *analyse(char *argv)
     command *cmd;
     while ((returnHandler = parse(tempParser, &cmd)) == 1)
     {
-        executeCommand(cmd);
+        returnHandler = executeCommand(cmd);
     }
     //Vérification de l'erreur
     if (returnHandler == 2)
