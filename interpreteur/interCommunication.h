@@ -10,7 +10,6 @@
 #include <unistd.h>
 typedef enum e_envMode {
     CONSOLE,
-    LOGFILE,
     BASHFILE
 } e_envMode;
 //Initialise l'environment de communication du shell
@@ -26,11 +25,14 @@ char *getStd();
 char *getErr();
 void readStd();
 void readErr();
+void readLog();
 int hasErr();
 int hasStd();
+int hasLog();
 
 void flushStd();
 void flushErr();
 void flush();
+void flushLog();
 
 #endif

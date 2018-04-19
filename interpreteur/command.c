@@ -88,7 +88,14 @@ int executeCommand(command *cmd)
     }
     //Exécute une command selon son mode
 }
-
+void executeCommandToFile(command *cmd, char *file, const char *mode)
+{
+    FILE *out;
+    executeCommand(cmd);
+    out = fopen(file, mode);
+    fprintf(out, "%s", getStd());
+    fclose(out);
+}
 //Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes
 void initListCommands()
 {

@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include "linkedList.h"
 #include "commandFunction.h"
-
+#include "interCommunication.h"
 //ENUM MODE : correspond au différent mode d'excécution d'une commande
 typedef enum MODE {
     DETACHEMENT,      // & DETACHMENT DU TERMINAL
@@ -40,6 +40,7 @@ command *initCommand(char *name, int nbArg, char **arg, MODE mode);
 void cpCommand(command *destination, command *source);
 //Execute une commande cmd
 int executeCommand(command *cmd);
+void executeCommandToFile(command *cmd, char *file, const char *mode);
 
 //Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes
 void initListCommands();

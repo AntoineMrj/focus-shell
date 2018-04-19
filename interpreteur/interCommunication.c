@@ -6,9 +6,10 @@ char *envVarEmpty = "fcsShlOut=";
 char *channelEnvVar = NULL;
 char *stdFileName = NULL;
 char *errFileName = NULL;
+char *logFileName = NULL;
 char *folderName = NULL;
 //Fonction gérant les interuptions
-static void sigFonction(int signo)
+static void sigFonction()
 {
     closeEnvironment();
     exit(0);
@@ -21,6 +22,8 @@ void initEnv()
 
     stdFileName = malloc(sizeof(char) * 256);
     errFileName = malloc(sizeof(char) * 256);
+    logFileName = malloc(sizeof(char) * 256);
+
     channelEnvVar = malloc(sizeof(char) * 128);
     char *temp = malloc(sizeof(char) * 32);
     env[0] = (char *)malloc(sizeof(char) * 256);
@@ -31,6 +34,7 @@ void initEnv()
 
     sprintf(stdFileName, "/tmp/%s/std.out", pid);
     sprintf(errFileName, "/tmp/%s/err.out", pid);
+    sprintf(logFileName, "/tmp/%s/log.out", pid);
     sprintf(folderName, "tmp/%s", pid);
     sprintf(temp, "/tmp/%s", pid);
     mkdir(temp, ACCESSPERMS);
@@ -41,6 +45,8 @@ void initEnv()
     FILE *channelFile = fopen(stdFileName, "a");
     fclose(channelFile);
     channelFile = fopen(errFileName, "a");
+    fclose(channelFile);
+    channelFile = fopen(logFileName, "a");
     fclose(channelFile);
 }
 char **getEnv()
@@ -54,9 +60,6 @@ void setEnvMode(e_envMode mode)
     {
     case CONSOLE:
         env[0] = NULL;
-        break;
-    case LOGFILE:
-        strcpy(env[0], envVarEmpty);
         break;
     case BASHFILE:
         strcpy(env[0], channelEnvVar);
@@ -142,7 +145,6 @@ char *getStd()
 {
     return getFile(stdFileName);
 }
-
 char *getErr()
 {
     return getFile(errFileName);
@@ -157,6 +159,10 @@ void readErr()
 {
     readFile(errFileName);
 }
+void readLog()
+{
+    readFile(logFileName);
+}
 int hasStd()
 {
     return sizeOfFile(stdFileName);
@@ -164,6 +170,10 @@ int hasStd()
 int hasErr()
 {
     return sizeOfFile(errFileName);
+}
+int hasLog()
+{
+    return sizeOfFile(logFileName);
 }
 void flushFile(char *file)
 {
@@ -174,4 +184,8 @@ void flush()
 {
     flushFile(stdFileName);
     flushFile(errFileName);
+}
+void flushLog()
+{
+    flushFile(logFileName);
 }

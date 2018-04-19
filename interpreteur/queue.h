@@ -21,4 +21,5 @@ command popQ(commandQueue *queue);
 commandQueue *initQueue(); //retourne une queue vide
 command *getTopQ(commandQueue *queue);
 void setTopQ(commandQueue *queue, command *cmd);
+void cleanQueue(commandQueue *queue);
 #endif

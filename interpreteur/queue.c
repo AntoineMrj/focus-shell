@@ -40,9 +40,9 @@ command popQ(commandQueue *queue) //on peut faire plus propre avec une liste dou
   commandQueueCell *currentCell = queue->head;
 
   if (currentCell == NULL)
-    return cmd; //la queue est vide /!\ Renvoyer NULL ne marche pas HELP /!\ 
+    return cmd;
 
-  else          //plus de 2 cellules
+  else //plus de 2 cellules
   {
     while (currentCell->next != NULL) //on va à la dernière cellule de la queue
     {
@@ -92,4 +92,11 @@ void setTopQ(commandQueue *queue, command *cmd) //ajoute la commande en tête de
     currentCell = currentCell->next;
   }
   currentCell->cmd = *cmd;
+}
+void cleanQueue(commandQueue *queue)
+{
+  while (getTopQ(queue) != NULL)
+  {
+    popQ(queue);
+  }
 }

@@ -32,9 +32,9 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
         command *temp;
         command file;
         command *cmd_ptr;
-        FILE *out;
         tempReadout = readOut;
         tempFlush = hasToFlush;
+        pid_t pid;
         switch (cmd.mode)
         {
         case NONE:
@@ -42,10 +42,7 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
             break;
         case REDIRECT_OUT:
             file = popQ(cmdQueue);
-            executeCommand(&cmd);
-            out = fopen(file.name, "w");
-            fprintf(out, "%s", getStd());
-            fclose(out);
+            executeCommandToFile(&cmd, file.name, "a");
             tempReadout = 0;
             if (file.mode == AND)
             {
@@ -60,10 +57,7 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
             break;
         case REDIRECT_OUT_END:
             file = popQ(cmdQueue);
-            executeCommand(&cmd);
-            out = fopen(file.name, "a");
-            fprintf(out, "%s", getStd());
-            fclose(out);
+            executeCommandToFile(&cmd, file.name, "a");
             tempReadout = 0;
             if (file.mode == AND)
             {
@@ -110,6 +104,18 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
             cmd.mode = file.mode;
             pushEndQ(cmdQueue, cmd_ptr);
             break;
+        case DETACHEMENT:
+            pid = fork();
+            if (pid == 0)
+            {
+                executeCommand(&cmd);
+                exit(0);
+            }
+            else
+            {
+                printf("[] %i\n", pid);
+            }
+            break;
         default:
             executeCommand(&cmd);
             break;
@@ -122,6 +128,11 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
         {
             flush();
         }
+    }
+    if (hasLog() > 0)
+    {
+        readLog();
+        flushLog();
     }
 }
 

@@ -5,9 +5,11 @@ e_outPutMode getOutPutMode()
 {
     e_outPutMode ret = CONSOLE_MODE;
     char *temp_envFile = malloc(sizeof(char) * 1024);
+    char *tempPPID = malloc(sizeof(256));
+    sprintf(tempPPID, "%i", getppid());
     if ((temp_envFile = getenv("fcsShlOut")) != NULL)
     {
-        if (strcmp(temp_envFile, "") == 0)
+        if (strcmp(temp_envFile, tempPPID) == 0)
         {
             ret = LOGFILE_MODE;
         }
@@ -27,11 +29,9 @@ FILE *getStdFile()
 
     if (outMode == LOGFILE_MODE)
     {
-        char *pid = malloc(sizeof(char) * 256);
         char *logFile = malloc(sizeof(char) * 256);
-        sprintf(pid, "%i", getpid());
-        sprintf(logFile, "/tmp/%s.out", pid);
-        fp = fopen(logFile, "aw");
+        sprintf(logFile, "/tmp/%s/log.out", temp_envFile);
+        fp = fopen(logFile, "a");
         return fp;
     }
     else if (outMode == BASHFILE_MODE)
@@ -53,10 +53,8 @@ FILE *getErrFile()
 
     if (outMode == LOGFILE_MODE)
     {
-        char *pid = malloc(sizeof(char) * 256);
         char *logFile = malloc(sizeof(char) * 256);
-        sprintf(pid, "%i", getpid());
-        sprintf(logFile, "/tmp/%s.out", pid);
+        sprintf(logFile, "/tmp/%s/log.out", temp_envFile);
         fp = fopen(logFile, "a");
         return fp;
     }
