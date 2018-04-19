@@ -7,11 +7,12 @@ void analyse(char *argv)
     //return commandLine();
     int returnHandler = 0;
     commandParser *tempParser = setParser(argv);
-    command *cmd;
+    command *cmd = NULL;
     commandQueue *cmdQueue = initQueue();
     while ((returnHandler = parse(tempParser, &cmd)) == 1)
     {
         pushQ(cmdQueue, cmd);
+        cmd = NULL;
     }
     executeQueue(cmdQueue, 1, 1);
     if (returnHandler == 2)
@@ -79,7 +80,7 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
             executeCommand(&cmd);
             commandParser *tempParser = setParser(getStd());
             temp = getTopQ(cmdQueue);
-            parseNewArg(tempParser, &temp);
+            parse(tempParser, &temp);
             setTopQ(cmdQueue, temp);
             tempReadout = 0;
             break;
@@ -97,7 +98,7 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
             file = popQ(cmdQueue);
             cmd_ptr = &cmd;
             tempParser = setParser(getFile(file.name));
-            parseNewArg(tempParser, &(cmd_ptr));
+            parse(tempParser, &(cmd_ptr));
             cmd.mode = file.mode;
             pushEndQ(cmdQueue, cmd_ptr);
             break;
@@ -105,7 +106,7 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
             file = popQ(cmdQueue);
             cmd_ptr = &cmd;
             tempParser = setParser(getUserEntry(file.name));
-            parseNewArg(tempParser, &(cmd_ptr));
+            parse(tempParser, &(cmd_ptr));
             cmd.mode = file.mode;
             pushEndQ(cmdQueue, cmd_ptr);
             break;

@@ -26,5 +26,5 @@ commandParser *setParser(char *chaine);
 //0 quand il n'y plus de commande à parser
 //Stocke les commandes trouvé dans cmd
 int parse(commandParser *parser, command **cmd);
-int parseNewArg(commandParser *parser, command **cmd);
+void normaliseStr(char *chaine);
 #endif

@@ -31,6 +31,9 @@ typedef struct command
     MODE mode;
 } command;
 
+//Initialise une commande vide
+command *emptyCommand();
+
 //Initialise une command
 command *initCommand(char *name, int nbArg, char **arg, MODE mode);
 //Initialise une command
