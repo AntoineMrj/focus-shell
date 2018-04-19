@@ -5,7 +5,7 @@ Interpreteur = ./interpreteur/
 Commande = ./commandes/
 
 SRC= $(wildcard $(Interpreteur)*.c)
-OBJ= $(objectDir)main.o $(objectDir)stack.o $(objectDir)queue.o $(objectDir)linkedList.o $(objectDir)commandParser.o $(objectDir)commandManager.o $(objectDir)commandEntry.o $(objectDir)command.o
+OBJ= $(objectDir)main.o $(objectDir)queue.o $(objectDir)linkedList.o $(objectDir)commandParser.o $(objectDir)commandManager.o $(objectDir)commandEntry.o $(objectDir)command.o
 
 all: $(EXEC)
 
@@ -16,8 +16,6 @@ $(EXEC):  $(objectDir)main.o $(OBJ) $(objectDir)ls.o $(objectDir)cat.o $(objectD
 
 #Interpreteur
 $(objectDir)main.o: main.c
-	gcc -o $@ -c $< -W -Wall
-$(objectDir)stack.o:  $(Interpreteur)stack.c
 	gcc -o $@ -c $< -W -Wall
 $(objectDir)queue.o:  $(Interpreteur)queue.c 
 	gcc -o $@ -c $< -W -Wall
