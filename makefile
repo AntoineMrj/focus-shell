@@ -30,6 +30,7 @@ $(objectDir)commandManager.o:  $(Interpreteur)commandManager.c
 $(objectDir)commandEntry.o:  $(Interpreteur)commandEntry.c
 	gcc -o $@ -c $< -W -Wall
 
+
 $(objectDir)interCommunication.o:  $(Interpreteur)interCommunication.c
 	gcc -o $@ -c $< -W -Wall
 

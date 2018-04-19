@@ -6,9 +6,19 @@ char *envVarEmpty = "fcsShlOut=";
 char *channelEnvVar = NULL;
 char *stdFileName = NULL;
 char *errFileName = NULL;
+char *folderName = NULL;
+//Fonction gérant les interuptions
+static void sigFonction(int signo)
+{
+    closeEnvironment();
+    exit(0);
+}
 //Initialise l'environment de communication du shell
 void initEnv()
 {
+    if (signal(SIGINT, sigFonction) == SIG_ERR)
+        printf("\nImpossible de gérer l'interruption.\n");
+
     stdFileName = malloc(sizeof(char) * 256);
     errFileName = malloc(sizeof(char) * 256);
     channelEnvVar = malloc(sizeof(char) * 128);
@@ -16,11 +26,12 @@ void initEnv()
     env[0] = (char *)malloc(sizeof(char) * 256);
 
     char *pid = malloc(sizeof(char) * 256);
-
+    char *folderName = malloc(sizeof(char) * 256);
     sprintf(pid, "%i", getpid());
 
     sprintf(stdFileName, "/tmp/%s/std.out", pid);
     sprintf(errFileName, "/tmp/%s/err.out", pid);
+    sprintf(folderName, "tmp/%s", pid);
     sprintf(temp, "/tmp/%s", pid);
     mkdir(temp, ACCESSPERMS);
     //Initialisation de la variable d'environment
@@ -65,6 +76,7 @@ void closeEnvironment()
 {
     remove(stdFileName);
     remove(errFileName);
+    remove(folderName);
 }
 int sizeOfFile(char *file)
 {

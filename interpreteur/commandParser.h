@@ -20,11 +20,11 @@ typedef struct commandParser
 } commandParser;
 
 //Initialise un parser
-commandParser* setParser( char *chaine);
+commandParser *setParser(char *chaine);
 //Lit une commande d'un parser
 //renvoit 1 quand une commande est parser
 //0 quand il n'y plus de commande à parser
 //Stocke les commandes trouvé dans cmd
 int parse(commandParser *parser, command **cmd);
-
+int parseNewArg(commandParser *parser, command **cmd);
 #endif

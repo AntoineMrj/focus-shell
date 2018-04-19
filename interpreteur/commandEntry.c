@@ -29,11 +29,11 @@ void printHead()
     struct passwd *pw;
 
     char *currentDir = malloc(sizeof(char) * 256);
-
+    char *hostName = malloc(sizeof(char) * 64);
     pw = getpwuid(getuid());
     getcwd(currentDir, 256);
-
-    printf(GRN "%s", pw->pw_name);
+    gethostname(hostName, 64);
+    printf(GRN "%s@%s", pw->pw_name, hostName);
     printf(WHT ":");
     printf(BLU "%s", currentDir);
     printf(RESET);

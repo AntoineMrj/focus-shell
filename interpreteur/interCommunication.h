@@ -6,6 +6,8 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <sys/types.h>
+#include <signal.h>
+#include <unistd.h>
 typedef enum e_envMode {
     CONSOLE,
     LOGFILE,
@@ -19,6 +21,7 @@ char **getEnv();
 //Fermeture de l'environment de communication en supprimant les fichiers
 void closeEnvironment();
 //Récupère le contenu du fichier de communication
+char *getFile(char *file);
 char *getStd();
 char *getErr();
 void readStd();

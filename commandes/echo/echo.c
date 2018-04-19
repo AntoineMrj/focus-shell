@@ -5,9 +5,9 @@ int echo(int argc, char *argv[])
   int i = 1;
   while (argv[i] != NULL)
   {
-    printf("%s ", argv[i]);
+    print("%s ", argv[i]);
     i++;
   }
-  printf("\n");
+  print("\n");
   return 0;
 }

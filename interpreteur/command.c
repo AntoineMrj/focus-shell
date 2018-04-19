@@ -44,7 +44,8 @@ MODE findMODE(char *string)
     }
     else if (strcmp(string, "<<") == 0)
     {
-        return REDIRECT_IN;
+
+        return REDIRECT_ENTRY;
     }
     else if (strcmp(string, "|") == 0)
     {
@@ -61,6 +62,10 @@ MODE findMODE(char *string)
     else if (strcmp(string, "\0") == 0)
     {
         return END;
+    }
+    else if (strcmp(string, ";") == 0)
+    {
+        return NONE;
     }
     else
     {

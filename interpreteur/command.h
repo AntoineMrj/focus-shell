@@ -14,6 +14,7 @@ typedef enum MODE {
     REDIRECT_OUT_END, // >> SORTIE VERS FIN DE FICHIER
     REDIRECT_OUT,     // > SORTIE VERS FICHIER
     REDIRECT_IN,      // < RESULT IN
+    REDIRECT_ENTRY,   // << ENTREE UTILISATEUR
     PIPE,             // | PIPE
     AND,              //&& et logique (exécution simple)
     OR,               //|| ou logique
