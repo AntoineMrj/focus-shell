@@ -83,8 +83,16 @@ int executeCommand(command *cmd)
     }
     else
     {
+      if(isProgram(cmd->name)) //si la commande est en fait un programme
+      {
+        executeProgram(cmd->name); //on execute le programme
+        return 1;
+      }
+      else
+      {
         printf("ERREUR : cette commande n'existe pas\n");
         return 0;
+      }
     }
     //Exécute une command selon son mode
 }
@@ -95,6 +103,32 @@ void executeCommandToFile(command *cmd, char *file, const char *mode)
     out = fopen(file, mode);
     fprintf(out, "%s", getStd());
     fclose(out);
+}
+void executeProgram(char* path)
+{
+  char *args[] = {path, NULL};
+
+  int pid = fork(); //on fait un fork pour executer le programme sans stoper le bash
+
+  if(pid > 0) //Code du processus pere
+  {
+      int statut;
+      wait(&statut);
+      /*printf("==== PERE ====\n");
+      printf("PID : %d\n",getpid());
+      printf("PPID : %d\n",getppid());*/
+   }
+   else{
+      if(pid==0 && execv(path, args) == -1){ //Code du processus fils
+        /*printf("==== FILS ====\n");
+        printf("PID : %d\n",getpid());
+        printf("PPID : %d\n",getppid());*/
+        printf("Erreur le fichier n'a pas pu se lancer \n");
+      }
+      else{
+         printf("ERREUR de fork\n");
+      }
+   }
 }
 //Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes
 void initListCommands()
