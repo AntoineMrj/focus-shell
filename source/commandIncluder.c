@@ -10,5 +10,5 @@ void initListCommands()
     addCmdIdentifier(cmdList, "echo", echo);
     addCmdIdentifier(cmdList, "pwd", pwd);
     addCmdIdentifier(cmdList, "cp", cp);
-    addCmdIdentifier(cmdList, "cd", cp);
+    addCmdIdentifier(cmdList, "cd", cd);
 }

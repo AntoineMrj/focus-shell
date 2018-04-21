@@ -5,7 +5,6 @@ void cd(int argc, char *argv[])
   char *dir;
   char *repertoire_courant = malloc(sizeof(char) * 256);
   size_t size = 256;
-
   if (argc == 1)
   {
     dir = getenv("HOME");

@@ -80,7 +80,7 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
             break;
         case AND:
             executeCommand(&cmd);
-            if (hasErr() >= 0)
+            if (hasErr() > 0)
                 popQ(cmdQueue);
             break;
         case OR:
@@ -124,10 +124,10 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
         {
             readStd();
         }
-        if (hasErr)
+        if (hasErr() > 0)
         {
             printf(RED);
-            readStd();
+            readErr();
             printf(WHT);
         }
         if (tempFlush)
