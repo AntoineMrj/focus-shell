@@ -46,8 +46,6 @@ void executeCommandToFile(command *cmd, char *file, const char *mode);
 //Execute un programme (.exe)
 void executeProgram(char *path);
 
-//Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes
-void initListCommands();
 struct commandList *cmdList;
 //Fonction de test
 void printCommand(command *cmd);

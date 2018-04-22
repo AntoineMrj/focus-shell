@@ -1,8 +1,9 @@
-procDir=./processus/
+procDir=./bin/processus/
 libDir=./lib/
 
 EXEC_INT=./bin/focusShell_int.exe
 EXEC_PROC=./bin/focusShell_proc.exe
+EXEC_LIB=./bin/focusShell_lib.exe
 
 LIB = $(libDir)libCommande.a
 
@@ -17,11 +18,24 @@ OBJ_COMMANDE = $(objectDir)ls.o $(objectDir)cat.o $(objectDir)echo.o $(objectDir
 
 OBJ_BASE =  $(objectDir)queue.o $(objectDir)linkedList.o $(objectDir)commandParser.o $(objectDir)commandManager.o $(objectDir)commandEntry.o $(objectDir)command.o $(objectDir)interCommunication.o
 
-OBJ_INT =  $(objectDir)main_int.o $(objectDir)commandIncluder.o
+OBJ_INT =  $(objectDir)main.o $(objectDir)commandIncluder.o
+
+OBJ_LIB =  $(objectDir)main.o $(objectDir)commandIncluder.o
+
+OBJ_PROC =  $(objectDir)main.o $(objectDir)commandIncluder_proc.o
+
+PROC = $(procDir)rm $(procDir)cp $(procDir)mkdir $(procDir)ls $(procDir)echo $(procDir)cat $(procDir)pwd 
+
+all: $(EXEC_INT) $(LIB) $(EXEC_LIB) $(EXEC_PROC) $(PROC)
 
 
-all: $(EXEC_INT) $(LIB)
 
+$(EXEC_LIB):  $(OBJ_LIB) $(OBJ_BASE) $(OBJ_COMMANDE) 
+	gcc -o $(EXEC_LIB) $^  -ldl -L ./lib/ -lCommande
+
+
+$(EXEC_PROC):  $(OBJ_PROC) $(OBJ_BASE) $(objectDir)cd.o $(objectDir)comCommunication.o 
+	gcc -o $(EXEC_PROC) $^
 
 $(EXEC_INT):  $(OBJ_INT) $(OBJ_BASE) $(OBJ_COMMANDE) 
 	gcc -o $(EXEC_INT) $^
@@ -32,6 +46,31 @@ $(objectDir)%.o : $(sourceDir)%.c
 
 $(LIB) : $(OBJ_COMMANDE)
 	ar crv $(LIB) $^
+
+#Commande en mode processus
+
+$(procDir)rm : $(objectDir)comCommunication.o $(objectDir)rm.o $(objectDir)main_rm.o 
+	gcc -o $@ $^ -W -Wall
+
+$(procDir)cp : $(objectDir)comCommunication.o $(objectDir)cp.o $(objectDir)main_cp.o 
+	gcc -o $@ $^ -W -Wall
+
+$(procDir)echo : $(objectDir)comCommunication.o $(objectDir)echo.o $(objectDir)main_echo.o 
+	gcc -o $@ $^ -W -Wall
+
+$(procDir)ls : $(objectDir)comCommunication.o $(objectDir)ls.o $(objectDir)main_ls.o 
+	gcc -o $@ $^ -W -Wall
+
+$(procDir)mkdir : $(objectDir)comCommunication.o $(objectDir)mkdir.o $(objectDir)main_mkdir.o 
+	gcc -o $@ $^ -W -Wall
+
+$(procDir)pwd : $(objectDir)comCommunication.o $(objectDir)pwd.o $(objectDir)main_pwd.o 
+	gcc -o $@ $^ -W -Wall
+
+
+$(procDir)cat : $(objectDir)comCommunication.o $(objectDir)cat.o $(objectDir)main_cat.o 
+	gcc -o $@ $^ -W -Wall
+
 
 clean:
 	rm -rf $(objectDir)*.o

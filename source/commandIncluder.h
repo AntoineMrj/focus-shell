@@ -8,5 +8,8 @@
 #include "rm.h"
 #include "cp.h"
 #include "cd.h"
+#include "mkdir.h"
+
+void initListCommands();
 
 #endif
