@@ -45,7 +45,10 @@ void executeCommandToFile(command *cmd, char *file, const char *mode);
 
 //Execute un programme (.exe)
 void executeProgram(char *path);
-
+//Vérifie si la chaine passée en paramètre correspond a un executable (de la forme "./"...".exe") et qu'il existe bien
+int isProgram(char *name);
+//Retourne le chemin vers le dossier contenant les processus pour le mode processes
+void setProcessPath(char *callCommand);
 struct commandList *cmdList;
 //Fonction de test
 void printCommand(command *cmd);

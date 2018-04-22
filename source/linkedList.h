@@ -35,9 +35,6 @@ void freeList(commandList *list);
 //contenue dans une liste
 cmdFunction find(commandList *list, char *name);
 
-//Vérifie si la chaine passée en paramètre correspond a un executable (de la forme "./"...".exe") et qu'il existe bien
-int isProgram(char *name);
-
 //Retourne un pointeur vers une liste vide
 commandList *initList();
 //Ajoute un cmdIdentifieur à la liste en l'initialisant avec le nom et la fonction passé en paramètre

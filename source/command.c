@@ -1,5 +1,5 @@
 #include "command.h"
-
+char *processPath;
 command *initCommand(char *name, int nbArg, char **arg, MODE mode)
 {
     command *temp = malloc(sizeof(command));
@@ -83,14 +83,22 @@ int executeCommand(command *cmd)
     }
     else
     {
+        char *tempFile = malloc(sizeof(char) * 512);
+        strcpy(tempFile, processPath);
+        strcat(tempFile, cmd->name);
         if (isProgram(cmd->name)) //si la commande est en fait un programme
         {
             executeProgram(cmd->name); //on execute le programme
             return 1;
         }
+        else if (isProgram(tempFile)) //si la commande est un processus
+        {
+            executeProgram(tempFile); //on execute le processus
+            return 1;
+        }
         else
         {
-            printf("ERREUR : cette commande n'existe pas\n");
+            printf("ERREUR : cette commande ou processus n'existe pas\n");
             return 0;
         }
     }
@@ -114,17 +122,11 @@ void executeProgram(char *path)
     {
         int statut;
         wait(&statut);
-        /*printf("==== PERE ====\n");
-      printf("PID : %d\n",getpid());
-      printf("PPID : %d\n",getppid());*/
     }
     else
     {
         if (pid == 0 && execv(path, args) == -1)
-        { //Code du processus fils
-            /*printf("==== FILS ====\n");
-        printf("PID : %d\n",getpid());
-        printf("PPID : %d\n",getppid());*/
+        {
             printf("Erreur le fichier n'a pas pu se lancer \n");
         }
         else
@@ -132,6 +134,39 @@ void executeProgram(char *path)
             printf("ERREUR de fork\n");
         }
     }
+}
+
+int isProgram(char *name)
+{
+
+    struct stat fileInfo;
+    if (stat(name, &fileInfo) == 0 && fileInfo.st_mode & S_IXUSR)
+        return 1;
+    else
+        return 0;
+}
+
+void setProcessPath(char *callCommand)
+{
+    char *temp = malloc(sizeof(char) * 256);
+    getcwd(temp, 256);
+    if (callCommand[0] == '.')
+    {
+        int lastSlash = strlen(callCommand);
+        for (int i = 2; i < strlen(callCommand); i++)
+        {
+            if (callCommand[i] == '/')
+                lastSlash = i;
+        }
+        char *endOFpath = malloc(sizeof(char) * strlen(callCommand));
+        for (int i = 2; i < lastSlash; i++)
+            endOFpath[i - 2] = callCommand[i];
+        endOFpath[strlen(callCommand) - 1] = '\n';
+        strcat(temp, "/");
+        strcat(temp, endOFpath);
+    }
+    strcat(temp, "/processus/");
+    processPath = temp;
 }
 
 //Fonction de test

@@ -7,7 +7,7 @@ int commandLine()
     char *entry = malloc(sizeof(char) * entrySize); //Commande de l'utilsateur
     //Retour de l'analyse
     //Nettoyage du terminal
-    system("clear");
+    //system("clear");
     initEnv();
     setEnvMode(BASHFILE);
     initListCommands();

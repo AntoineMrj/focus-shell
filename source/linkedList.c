@@ -62,23 +62,6 @@ cmdFunction find(commandList *list, char *name) //renvoie la fonction si elle es
   return NULL;
 }
 
-int isProgram(char *name)
-{
-  FILE *file = NULL;
-  file = fopen(name, "r");
-
-  int cmdlen = strlen(name);
-
-  //si la commande commence par ./ et se termine par .exe et que le fichier existe bien
-  if (name[0] == '.' && name[1] == '/' && name[cmdlen - 1] == 'e' && name[cmdlen - 2] == 'x' && name[cmdlen - 3] == 'e' && name[cmdlen - 4] == '.' && file != NULL)
-  {
-    return 1;
-  }
-
-  else
-    return 0;
-}
-
 commandList *initList()
 {
   commandList *list = malloc(sizeof(commandList));
