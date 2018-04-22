@@ -8,22 +8,22 @@ commandParser *setParser(char *chaine)
     temp->actualPosition = 0;
     normaliseStr(chaine);
     temp->chaine = chaine;
-    //temp->chaine = "test a b c";
     temp->state = WAIT;
     temp->hasEnded = 0;
     return temp;
 }
 
 //Lit une commande d'un parser
-//renvoit 1 quand une commande est parser
+//renvoit 1 quand une commande est parsée
 //0 quand il n'y plus de commande à parser
-//Stocke les commandes trouvé dans cmd
+//Stocke les commandes trouvées dans cmd
 char getActualChar(commandParser *parser)
 {
     char temp = parser->chaine[parser->actualPosition];
     parser->actualPosition++;
     return temp;
 }
+
 int parse(commandParser *parser, command **cmd)
 {
     //Sortie si on a déjà atteint la fin dans un appel précédent
@@ -47,7 +47,7 @@ int parse(commandParser *parser, command **cmd)
             cmdName = (*cmd)->name;
     }
     MODE mode;
-    //Variable de parcours de la chaine
+    //Variable de parcours de la chaîne
     char actualChar = 'X';
     while (actualChar != '\0')
     {
@@ -71,10 +71,10 @@ int parse(commandParser *parser, command **cmd)
         buffer[bufferPosition] = '\0';
         //Récupération du mode
         mode = findMODE(buffer);
-        //Si la chaine ne correspond pas à un mode et quelle n'est pas vide
+        //Si la chaîne ne correspond pas à un mode et quelle n'est pas vide
         if (mode == NONE && bufferPosition > 0 && buffer[0] != '\0')
         {
-            //Assignation de la première chaine au nom de la commande
+            //Assignation de la première chaîne au nom de la commande
             if (actualArg == 0)
             {
                 strcpy(cmdName, buffer);
@@ -90,7 +90,7 @@ int parse(commandParser *parser, command **cmd)
     }
     if (actualArg > 0)
     {
-        //Copie de la commande crée
+        //Copie de la commande créée
         (*cmd) = initCommand(cmdName, actualArg, argBUFFER, mode);
         return 1;
     }
@@ -102,6 +102,7 @@ int parse(commandParser *parser, command **cmd)
     return 2;
 }
 
+//Ajoute un \0 à la fin de la chaîne pour la "normaliser"
 void normaliseStr(char *chaine)
 {
     chaine[strlen(chaine) - 1] = '\0';

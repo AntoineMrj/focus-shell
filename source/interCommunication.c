@@ -1,19 +1,21 @@
 #include "interCommunication.h"
+
 char *env[] = {NULL, NULL};
 char *envVar = "fcsShlOut";
 char *envVarEmpty = "fcsShlOut=";
-
 char *channelEnvVar = NULL;
 char *stdFileName = NULL;
 char *errFileName = NULL;
 char *logFileName = NULL;
 char *folderName = NULL;
+
 //Fonction gérant les interuptions
 static void sigFonction()
 {
     closeEnvironment();
     exit(0);
 }
+
 //Initialise l'environment de communication du shell
 void initEnv()
 {
@@ -49,10 +51,12 @@ void initEnv()
     channelFile = fopen(logFileName, "a");
     fclose(channelFile);
 }
+
 char **getEnv()
 {
     return env;
 }
+
 //Choisit le mode de communication des résultats
 void setEnvMode(e_envMode mode)
 {
@@ -74,13 +78,16 @@ void setEnvMode(e_envMode mode)
         putenv(env[0]);
     }
 }
-//Fermeture de l'environment de communication en supprimant le fichier
+
+//Fermeture de l'environnement de communication en supprimant le fichier
 void closeEnvironment()
 {
     remove(stdFileName);
     remove(errFileName);
     remove(folderName);
 }
+
+//Retoune la taille d'un fichier
 int sizeOfFile(char *file)
 {
     int sizeF;
@@ -116,6 +123,7 @@ void readFile(char *file)
     }
     free(lineBuffer);
 }
+
 char *getFile(char *file)
 {
     char *result = NULL;
@@ -140,6 +148,7 @@ char *getFile(char *file)
     free(lineBuffer);
     return result;
 }
+
 //Récupère le contenu du fichier de communication
 char *getStd()
 {
@@ -154,7 +163,6 @@ void readStd()
 {
     readFile(stdFileName);
 }
-
 void readErr()
 {
     readFile(errFileName);

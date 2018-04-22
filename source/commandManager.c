@@ -1,17 +1,15 @@
 #include "commandManager.h"
 
-//Envoit la chaine de caractère à un parser pour l'analyser
+//Envoie la chaîne de caractère à un parser pour l'analyser
 void analyse(char *argv)
 {
-    //Lancement de la console et de son affichage
-    //return commandLine();
     int returnHandler = 0;
     commandParser *tempParser = setParser(argv);
     command *cmd = NULL;
-    commandQueue *cmdQueue = initQueue();
+    commandQueue *cmdQueue = initQueue(); //création d'une liste FIFO
     while ((returnHandler = parse(tempParser, &cmd)) == 1)
     {
-        pushQ(cmdQueue, cmd);
+        pushQ(cmdQueue, cmd); //On ajoute la commande à la liste
         cmd = NULL;
     }
     executeQueue(cmdQueue, 1, 1);
@@ -19,9 +17,10 @@ void analyse(char *argv)
     {
         printf("ERREUR LORS DU PARSING DE LA COMMANDE\n");
     }
-
     //Vérification de l'erreur
 }
+
+//Execute les commandes contenues dans la cmdQueue
 void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
 {
     int tempReadout;
@@ -35,7 +34,7 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
         tempReadout = readOut;
         tempFlush = hasToFlush;
         pid_t pid;
-        switch (cmd.mode)
+        switch (cmd.mode) //gestion des differents mode d'execution
         {
         case NONE:
             executeCommand(&cmd);
@@ -142,14 +141,12 @@ void executeQueue(commandQueue *cmdQueue, int hasToFlush, int readOut)
     }
 }
 
+//Recupère les données entrées par l'utilisateur
 char *getUserEntry(char *endString)
 {
     const size_t entrySize = 128;
     char *entry = malloc(sizeof(char) * entrySize); //Commande de l'utilsateur
     char *out = calloc(1, sizeof(char));
-    //Retour de l'analyse
-    //Nettoyage du terminal
-    //Tant que l'utilisateur ne quitte pas le terminal
     printf("\n");
     do
     {

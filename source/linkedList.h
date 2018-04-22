@@ -25,19 +25,18 @@ typedef struct commandList
 } commandList;
 
 //ajoute un élément à une liste chainée
-//de préférence trié par ordre alphabétique
 void add(commandList *list, cmdIdentifier *function);
 
 //libère une liste chainée
 void freeList(commandList *list);
 
-//trouve et renvoit la fonction principale d'une commande nommée name
-//contenue dans une liste
+//trouve et renvoie la fonction principale d'une commande nommée name contenue dans une liste
 cmdFunction find(commandList *list, char *name);
 
 //Retourne un pointeur vers une liste vide
 commandList *initList();
-//Ajoute un cmdIdentifieur à la liste en l'initialisant avec le nom et la fonction passé en paramètre
+
+//Ajoute un cmdIdentifier à la liste en l'initialisant avec le nom et la fonction passée en paramètre
 void addCmdIdentifier(commandList *list, char *name, cmdFunction function);
 
 #endif

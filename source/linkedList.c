@@ -15,7 +15,7 @@ void add(commandList *list, cmdIdentifier *function)
   newCell->next = NULL; //On ajoute la cellule à la fin
 
   if (list->head == NULL)
-  { //si la liste et vide on met la cellule dans head
+  { //si la liste est vide on met la cellule dans head
     list->head = newCell;
   }
   else
@@ -25,16 +25,17 @@ void add(commandList *list, cmdIdentifier *function)
     { //on se place à la fin de la liste
       currentCell = currentCell->next;
     }
-    currentCell->next = newCell; //on chaine la nouvelle cellule
+    currentCell->next = newCell; //on chaîne la nouvelle cellule
   }
 }
 
+//supprime une liste chainée et libère sa mémoire
 void freeList(commandList *list)
 {
   commandListCell *head = list->head;
   commandListCell *tmp;
   while (head->next != NULL)
-  { //Tant que la liste n'est pas vide on supprime decale la tete vers l'avant et on supprime la cellule
+  { //Tant que la liste n'est pas vide on decale la tete vers l'avant et on supprime la cellule
     tmp = head;
     head = head->next;
     free(tmp);
@@ -42,7 +43,8 @@ void freeList(commandList *list)
   list->head = NULL; //une fois la liste vide on réinitialise la tete et la queue
 }
 
-cmdFunction find(commandList *list, char *name) //renvoie la fonction si elle est trouvée
+//renvoie la fonction si elle est trouvée
+cmdFunction find(commandList *list, char *name)
 {
   if (list != NULL)
   {
@@ -62,6 +64,7 @@ cmdFunction find(commandList *list, char *name) //renvoie la fonction si elle es
   return NULL;
 }
 
+//Retourne un pointeur vers une liste vide
 commandList *initList()
 {
   commandList *list = malloc(sizeof(commandList));
@@ -70,6 +73,7 @@ commandList *initList()
   return list;
 }
 
+//Ajoute un cmdIdentifier à la liste en l'initialisant avec le nom et la fonction passée en paramètre
 void addCmdIdentifier(commandList *list, char *name, cmdFunction function)
 {
   //déclaration du pointeur qui va contenir les fonctions une à une

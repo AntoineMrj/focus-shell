@@ -9,9 +9,9 @@
 #include "interCommunication.h"
 #include <sys/wait.h>
 
-//ENUM MODE : correspond au différent mode d'excécution d'une commande
+//ENUM MODE : correspond aux différents modes d'excécution d'une commande
 typedef enum MODE {
-    DETACHEMENT,      // & DETACHMENT DU TERMINAL
+    DETACHEMENT,      // & DETACHEMENT DU TERMINAL
     REDIRECT_OUT_END, // >> SORTIE VERS FIN DE FICHIER
     REDIRECT_OUT,     // > SORTIE VERS FICHIER
     REDIRECT_IN,      // < RESULT IN
@@ -32,24 +32,32 @@ typedef struct command
     MODE mode;
 } command;
 
+struct commandList *cmdList;
+
 //Initialise une commande vide
 command *emptyCommand();
 
-//Initialise une command
+//Initialise une commande
 command *initCommand(char *name, int nbArg, char **arg, MODE mode);
-//Initialise une command
+
+//Copie une commande dans une autre
 void cpCommand(command *destination, command *source);
+
 //Execute une commande cmd
 int executeCommand(command *cmd);
+
+//Execute une commande selon son mode
 void executeCommandToFile(command *cmd, char *file, const char *mode);
 
-//Execute un programme (.exe)
+//Execute un programme executable
 void executeProgram(char *path);
-//Vérifie si la chaine passée en paramètre correspond a un executable (de la forme "./"...".exe") et qu'il existe bien
+
+//Vérifie si la chaine passée en paramètre correspond à un fichier standard executable qui existe
 int isProgram(char *name);
-//Retourne le chemin vers le dossier contenant les processus pour le mode processes
+
+//Retourne le chemin vers le dossier contenant les processus pour le mode processus
 void setProcessPath(char *callCommand);
-struct commandList *cmdList;
+
 //Fonction de test
 void printCommand(command *cmd);
 

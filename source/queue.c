@@ -13,6 +13,7 @@ void pushQ(commandQueue *queue, command *cmd) //ajoute la commande en tête de q
 
   queue->head = newCell; //actualisation de la nouvelle tête
 }
+
 void pushEndQ(commandQueue *queue, command *cmd) //ajoute la commande en fin de queue (fifo)
 {
   commandQueueCell *newCell = malloc(sizeof(commandQueueCell)); //création de la nouvelle cellule
@@ -34,9 +35,9 @@ void pushEndQ(commandQueue *queue, command *cmd) //ajoute la commande en fin de 
   }
 }
 
-command popQ(commandQueue *queue) //on peut faire plus propre avec une liste doublement chainée
+command popQ(commandQueue *queue)
 {
-  command cmd; //sert à stocker la command à pop
+  command cmd; //sert à stocker la commande à pop
   commandQueueCell *currentCell = queue->head;
 
   if (currentCell == NULL)
@@ -65,11 +66,12 @@ command popQ(commandQueue *queue) //on peut faire plus propre avec une liste dou
 
 commandQueue *initQueue()
 {
-  commandQueue *queue = malloc(sizeof(commandQueue)); //réservation de l'espace mémoire pour la Queue
+  commandQueue *queue = malloc(sizeof(commandQueue)); //réservation de l'espace mémoire pour la queue
   queue->head = NULL;                                 //initialisation de la queue;
 
   return queue;
 }
+
 command *getTopQ(commandQueue *queue)
 {
   if (queue->head != NULL)
@@ -84,6 +86,7 @@ command *getTopQ(commandQueue *queue)
   else
     return NULL;
 }
+
 void setTopQ(commandQueue *queue, command *cmd) //ajoute la commande en tête de queue (fifo)
 {
   commandQueueCell *currentCell = queue->head;
@@ -93,6 +96,7 @@ void setTopQ(commandQueue *queue, command *cmd) //ajoute la commande en tête de
   }
   currentCell->cmd = *cmd;
 }
+
 void cleanQueue(commandQueue *queue)
 {
   while (getTopQ(queue) != NULL)

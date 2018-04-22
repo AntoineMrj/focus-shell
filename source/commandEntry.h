@@ -4,8 +4,11 @@
 #include <pwd.h>
 #include "interCommunication.h"
 #include "printColor.h"
-//Fonction de base d'entré de l'utilisateur
+
+//Fonction de base d'entrée de l'utilisateur
 int commandLine();
+
+//Gère l'affichage du terminal (affichage du path du dossier courant)
 void printHead();
 
 #endif

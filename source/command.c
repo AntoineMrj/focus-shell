@@ -16,6 +16,7 @@ command *initCommand(char *name, int nbArg, char **arg, MODE mode)
     temp->mode = mode;
     return temp;
 }
+
 void cpCommand(command *destination, command *source)
 {
     destination->arg = source->arg;
@@ -23,6 +24,7 @@ void cpCommand(command *destination, command *source)
     destination->nbArg = source->nbArg;
     destination->mode = source->mode;
 }
+
 MODE findMODE(char *string)
 {
 
@@ -72,6 +74,7 @@ MODE findMODE(char *string)
         return NONE;
     }
 }
+
 //Execute une commande cmd
 int executeCommand(command *cmd)
 {
@@ -102,8 +105,9 @@ int executeCommand(command *cmd)
             return 0;
         }
     }
-    //Exécute une command selon son mode
 }
+
+//Execute une commande selon son mode
 void executeCommandToFile(command *cmd, char *file, const char *mode)
 {
     FILE *out;
@@ -112,11 +116,12 @@ void executeCommandToFile(command *cmd, char *file, const char *mode)
     fprintf(out, "%s", getStd());
     fclose(out);
 }
+
 void executeProgram(char *path)
 {
     char *args[] = {path, NULL};
 
-    int pid = fork(); //on fait un fork pour executer le programme sans stoper le bash
+    int pid = fork(); //on fait un fork pour executer le programme sans stopper le bash
 
     if (pid > 0) //Code du processus pere
     {
@@ -127,15 +132,16 @@ void executeProgram(char *path)
     {
         if (pid == 0 && execv(path, args) == -1)
         {
-            printf("Erreur le fichier n'a pas pu se lancer \n");
+            printf("ERREUR : le fichier n'a pas pu se lancer \n");
         }
         else
         {
-            printf("ERREUR de fork\n");
+            printf("ERREUR : erreur de fork\n");
         }
     }
 }
 
+//Vérifie si la chaine passée en paramètre correspond à un fichier standard executable qui existe
 int isProgram(char *name)
 {
 
@@ -146,6 +152,7 @@ int isProgram(char *name)
         return 0;
 }
 
+//Retourne le chemin vers le dossier contenant les processus pour le mode processus
 void setProcessPath(char *callCommand)
 {
     char *temp = malloc(sizeof(char) * 256);

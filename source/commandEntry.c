@@ -1,13 +1,10 @@
 #include "commandEntry.h"
 
-//Fonction de base d'entré de l'utilisateur
+//Fonction de base d'entrée de l'utilisateur
 int commandLine()
 {
     const size_t entrySize = 64;
     char *entry = malloc(sizeof(char) * entrySize); //Commande de l'utilsateur
-    //Retour de l'analyse
-    //Nettoyage du terminal
-    //system("clear");
     initEnv();
     setEnvMode(BASHFILE);
     initListCommands();
@@ -16,14 +13,16 @@ int commandLine()
     {
         //Code de gestion de l'affichage du terminal
         printHead();
-        //Gestion des entrées utilisateurs
+        //Gestion des entrées utilisateur
         fgets(entry, entrySize, stdin);
-        //Envoit des commandes utilisateurs à
+        //Envoit des commandes utilisateur
         analyse(entry);
     } while (1);
     closeEnvironment();
     return 0;
 }
+
+//Gère l'affichage du terminal (affichage du path du dossier courant)
 void printHead()
 {
     struct passwd *pw;

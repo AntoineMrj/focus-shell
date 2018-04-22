@@ -10,6 +10,7 @@
 #include "cd.h"
 #include "mkdir.h"
 
+//Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes que gère le bash
 void initListCommands();
 
 #endif
