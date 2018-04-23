@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
-#include "../comCommunication.h"
+#include "comCommunication.h"
 
 int du(int argc, char *argv[]);
 char *get_current_dir_name(void);

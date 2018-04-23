@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/stat.h>
-#include "../comCommunication.h"
+#include "comCommunication.h"
 
 int chmode(int argc, char *argv[]);
 
