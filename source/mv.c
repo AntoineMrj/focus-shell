@@ -24,7 +24,7 @@ void mv(int argc, char *argv[])
   }
   fclose(source);
   fclose(destination);
-  if (remove(argv[1]))
+  if (remove(argv[1]) == 0)
   {
     print("le fichier \"%s\" a bien été supprimé.\n", argv[1]);
   }
