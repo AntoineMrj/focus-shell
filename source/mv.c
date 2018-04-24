@@ -1,7 +1,7 @@
 #include "mv.h"
 #include "./comCommunication.h"
 
-int mv(int argc, char *argv[])
+void mv(int argc, char *argv[])
 {
   FILE *source = NULL;
   FILE *destination = NULL;
@@ -11,17 +11,20 @@ int mv(int argc, char *argv[])
   if (source == NULL)
   {
     printErr("Le fichier source \"%s\" est introuvable.", argv[1]);
-    return (-1);
+    return;
   }
-
   while (fgets(chaine, 1000, source) != NULL)
   {
     fputs(chaine, destination);
   }
   fclose(source);
   fclose(destination);
-
-  print("le fichier \"%s\" a bien été supprimé.\n", argv[1]);
-  remove(argv[1]);
-  return 0;
+  if (remove(argv[1]))
+  {
+    print("le fichier \"%s\" a bien été supprimé.\n", argv[1]);
+  }
+  else
+  {
+    printErr("Erreur lors de la suppression de %s.", argv[1]);
+  }
 }

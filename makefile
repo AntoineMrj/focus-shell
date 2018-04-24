@@ -13,7 +13,7 @@ sourceDir = ./source/
 
 
 
-OBJ_COMMANDE = $(objectDir)ls.o $(objectDir)cat.o $(objectDir)echo.o $(objectDir)rm.o $(objectDir)pwd.o $(objectDir)cp.o $(objectDir)cd.o $(objectDir)chgrp.o $(objectDir)chown.o $(objectDir)chmod.o $(objectDir)du.o  $(objectDir)makedir.o $(objectDir)comCommunication.o
+OBJ_COMMANDE = $(objectDir)ls.o $(objectDir)cat.o $(objectDir)echo.o $(objectDir)rm.o $(objectDir)pwd.o $(objectDir)cp.o $(objectDir)cd.o $(objectDir)chgrp.o $(objectDir)chown.o $(objectDir)chmod.o $(objectDir)du.o $(objectDir)mv.o  $(objectDir)makedir.o $(objectDir)comCommunication.o
 
 
 OBJ_BASE =  $(objectDir)queue.o $(objectDir)linkedList.o $(objectDir)commandParser.o $(objectDir)commandManager.o $(objectDir)commandEntry.o $(objectDir)command.o $(objectDir)interCommunication.o
@@ -81,6 +81,9 @@ $(procDir)chmod : $(objectDir)comCommunication.o $(objectDir)chmod.o $(objectDir
 	gcc -o $@ $^ -W -Wall
 
 $(procDir)cat : $(objectDir)comCommunication.o $(objectDir)cat.o $(objectDir)main_cat.o 
+	gcc -o $@ $^ -W -Wall
+
+$(procDir)mv : $(objectDir)comCommunication.o $(objectDir)mv.o $(objectDir)main_mv.o 
 	gcc -o $@ $^ -W -Wall
 
 

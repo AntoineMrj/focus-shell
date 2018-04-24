@@ -22,4 +22,4 @@ Chacun de ces modes correspondent à un exécutable différent qui peut être la
 
 ### Informations supplémentaires
 
-Voir les fichiers : "rapport.pdf" .
+Voir le fichier : "rapport.pdf" pour une description technique du programme et de son organisation lors de sa création.

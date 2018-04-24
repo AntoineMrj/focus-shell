@@ -3,6 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "./comCommunication.h"
-int mv(int argc, char *argv[]);
+void mv(int argc, char *argv[]);
 
 #endif
