@@ -1,9 +1,9 @@
 procDir=./bin/processus/
 libDir=./bin/lib/
 
-EXEC_INT=./bin/focusShell_int.exe
-EXEC_PROC=./bin/focusShell_proc.exe
-EXEC_LIB=./bin/focusShell_lib.exe
+EXEC_INT=./bin/focusShell_int
+EXEC_PROC=./bin/focusShell_proc
+EXEC_LIB=./bin/focusShell_lib
 
 LIB = $(libDir)libCommande.a
 

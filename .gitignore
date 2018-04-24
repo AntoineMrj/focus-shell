@@ -1,0 +1,7 @@
+.vscode/launch.json
+bin/lib/*
+bin/processus/*
+object/*
+bin/focusShell_int
+bin/focusShell_lib
+bin/focusShell_proc
