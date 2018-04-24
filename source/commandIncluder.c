@@ -16,4 +16,5 @@ void initListCommands()
     addCmdIdentifier(cmdList, "chgrp", chgrp);
     addCmdIdentifier(cmdList, "chmod", chmode);
     addCmdIdentifier(cmdList, "du", du);
+    addCmdIdentifier(cmdList, "mv", mv);
 }
