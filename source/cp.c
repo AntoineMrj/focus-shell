@@ -1,21 +1,21 @@
 #include "cp.h"
 
-int cp(int argc, char *argv[])
+void cp(int argc, char *argv[])
 {
   DIR *destination = NULL;
   FILE *source = NULL;
   FILE *copieSource = NULL;
 
   if(argc<2){
-    printf("cp: opérande manquant\n");
+    printErr("cp: opérande manquant\n");
   }
   else{
     destination = opendir(argv[argc-1]);
 
     if(destination==NULL){ //si le dernier argument n'est pas un répertoire mais un fichier
       if(argc>3){ //si on a plus de 2 noms de fichier en argument, alors on s'attend à copier les (n-1) premiers fichiers dans le n-ième argument qui doit être un réperoire. Or celui ci est un fichier.
-        printf("La cible '%s' n'est pas un répertoire.\n",argv[argc-1]); //Donc on renvoie une erreur.
-        return -1;
+        printErr("La cible '%s' n'est pas un répertoire.\n",argv[argc-1]); //Donc on renvoie une erreur.
+        return;
       }
       else{ //si on a 2 noms de fichiers en argument, alors on copie le 1er fichier sous le nom du 2ème fichier, dans le répertoire courant
         source = fopen(argv[1], "r"); //on ouvre le fichier source
@@ -24,8 +24,8 @@ int cp(int argc, char *argv[])
 
         if (source == NULL) //si le fichier source n'existe pas
         {
-          printf("Le fichier source \"%s\" est introuvable.\n", argv[1]);
-          return (-1);
+          printErr("Le fichier source \"%s\" est introuvable.\n", argv[1]);
+          return;
         }
         while (fgets(chaine, 1000, source) != NULL) //copie ligne par ligne du fichier source
         {
@@ -51,8 +51,8 @@ int cp(int argc, char *argv[])
         char chaine[1000] = "";
         if (source == NULL) //si le fichier à copier n'existe pas
         {
-          printf("Le fichier source \"%s\" est introuvable.", argv[i]);
-          return (-1);
+          printErr("Le fichier source \"%s\" est introuvable.", argv[i]);
+          return;
         }
         while (fgets(chaine, 1000, source) != NULL) //copie ligne par ligne du fichier source
         {
@@ -63,5 +63,4 @@ int cp(int argc, char *argv[])
       }
     }
   }
-  return 0;
 }

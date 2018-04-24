@@ -8,6 +8,6 @@
 #include <string.h>
 #include "comCommunication.h"
 
-int cp(int argc, char *argv[]);
+void cp(int argc, char *argv[]);
 
 #endif
