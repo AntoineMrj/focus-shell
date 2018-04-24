@@ -8,7 +8,6 @@ commandParser *setParser(char *chaine)
     temp->actualPosition = 0;
     normaliseStr(chaine);
     temp->chaine = chaine;
-    temp->state = WAIT;
     temp->hasEnded = 0;
     return temp;
 }
