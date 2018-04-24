@@ -9,6 +9,10 @@
 #include "cp.h"
 #include "cd.h"
 #include "mkdir.h"
+#include "chown.h"
+#include "chgrp.h"
+#include "chmod.h"
+#include "mkdir.h"
 
 //Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes que gère le bash
 void initListCommands();
