@@ -5,6 +5,6 @@
 #include <dirent.h>
 #include <unistd.h>
 #include "comCommunication.h"
-int ls(int argc, char *argv[]);
+void ls(int argc, char *argv[]);
 
 #endif

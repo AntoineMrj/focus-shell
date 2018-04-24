@@ -8,6 +8,6 @@
 #include "comCommunication.h"
 
 int chown(const char *path, uid_t owner, gid_t group);
-int chowner(int argc, char *argv[]);
+void chowner(int argc, char *argv[]);
 
 #endif

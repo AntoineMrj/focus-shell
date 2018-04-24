@@ -1,5 +1,5 @@
 #include "chmod.h"
-int chmode(int argc, char *argv[])
+void chmode(int argc, char *argv[])
 {
 
   /*droits:
@@ -135,6 +135,4 @@ int chmode(int argc, char *argv[])
     printErr("Erreur: droits mal formulés\n");
     break;
   }
-
-  return 0;
 }

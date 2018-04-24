@@ -1,5 +1,7 @@
 #include "du.h"
 
-int main(int argc, char *argv[]) {
-  return du(argc, argv);
+int main(int argc, char *argv[])
+{
+  du(argc, argv);
+  return 0;
 }

@@ -2,6 +2,6 @@
 #define COMMANDFUNCTION_H
 
 //prototype des fonction utilisées pour les commandes
-typedef int (*cmdFunction)(int argc, char *argv[]);
+typedef void (*cmdFunction)(int argc, char *argv[]);
 
 #endif

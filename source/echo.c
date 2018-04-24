@@ -1,6 +1,6 @@
 #include "echo.h"
 
-int echo(int argc, char *argv[])
+void echo(int argc, char *argv[])
 {
   int i = 1;
   while (argv[i] != NULL)
@@ -9,5 +9,4 @@ int echo(int argc, char *argv[])
     i++;
   }
   print("\n");
-  return 0;
 }

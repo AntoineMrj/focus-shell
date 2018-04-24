@@ -3,6 +3,7 @@
 #include "commandManager.h"
 #include <pwd.h>
 #include "interCommunication.h"
+#include "command.h"
 #include "printColor.h"
 
 //Fonction de base d'entrée de l'utilisateur

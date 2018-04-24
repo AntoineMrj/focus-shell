@@ -4,6 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "comCommunication.h"
-int cat(int argc, char *argv[]);
+void cat(int argc, char *argv[]);
 
 #endif

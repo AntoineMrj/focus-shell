@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include "comCommunication.h"
-int makedir(int argc, char *argv[]);
+
+void makedir(int argc, char *argv[]);
 
 #endif

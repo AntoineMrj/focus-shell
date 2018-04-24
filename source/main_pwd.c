@@ -2,5 +2,6 @@
 
 int main(int argc, char *argv[])
 {
-    return pwd(argc, argv);
+    pwd(argc, argv);
+    return 0;
 }

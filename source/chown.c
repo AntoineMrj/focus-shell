@@ -1,6 +1,6 @@
 #include "chown.h"
 
-int chowner(int argc, char *argv[])
+void chowner(int argc, char *argv[])
 {
 
   char *fichier;
@@ -20,19 +20,18 @@ int chowner(int argc, char *argv[])
     pwd = getpwnam(argv[1]);
     if (pwd == NULL)
     {
-      printErr("%s: nom d'utilisateur incorrect\n",argv[1]);
-      return -1;
+      printErr("%s: nom d'utilisateur incorrect\n", argv[1]);
+      return;
     }
     uid = pwd->pw_uid;
 
-    for(int i=2; i<argc; i++)
+    for (int i = 2; i < argc; i++)
     {
       fichier = argv[i];
-      if(chown(fichier, uid, -1) == -1)
+      if (chown(fichier, uid, -1) == -1)
       {
-        printErr("%s: nom de fichier incorrect\n",fichier);
+        printErr("%s: nom de fichier incorrect\n", fichier);
       }
     }
   }
-  return 0;
 }

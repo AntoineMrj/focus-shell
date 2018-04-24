@@ -1,5 +1,7 @@
 #include "chgrp.h"
 
-int main(int argc, char *argv[]){
-  return chgrp(argc, argv);
+int main(int argc, char *argv[])
+{
+  chgrp(argc, argv);
+  return 0;
 }

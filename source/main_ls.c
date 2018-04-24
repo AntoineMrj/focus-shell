@@ -2,5 +2,6 @@
 
 int main(int argc, char *argv[])
 {
-    return ls(argc, argv);
+    ls(argc, argv);
+    return 0;
 }

@@ -8,11 +8,11 @@
 #include "rm.h"
 #include "cp.h"
 #include "cd.h"
-#include "mkdir.h"
+#include "makedir.h"
 #include "chown.h"
 #include "chgrp.h"
 #include "chmod.h"
-#include "mkdir.h"
+#include "du.h"
 
 //Initialise la liste des commandes en remplissant une liste chainée avec les différentes commandes que gère le bash
 void initListCommands();

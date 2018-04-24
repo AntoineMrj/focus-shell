@@ -1,6 +1,6 @@
 #include "chgrp.h"
 
-int chgrp(int argc, char *argv[])
+void chgrp(int argc, char *argv[])
 {
 
   char *fichier;
@@ -20,19 +20,20 @@ int chgrp(int argc, char *argv[])
     grp = getgrnam(argv[1]);
     if (grp == NULL)
     {
-      printErr("%s: nom de groupe incorrect\n",argv[1]);
-      return -1;
+      printErr("%s: nom de groupe incorrect\n", argv[1]);
     }
-    gid = grp->gr_gid;
-
-    for(int i=2; i<argc; i++)
+    else
     {
-      fichier = argv[i];
-      if(chown(fichier, -1, gid) == -1)
+      gid = grp->gr_gid;
+
+      for (int i = 2; i < argc; i++)
       {
-        printErr("%s: nom de fichier incorrect\n",fichier);
+        fichier = argv[i];
+        if (chown(fichier, -1, gid) == -1)
+        {
+          printErr("%s: nom de fichier incorrect\n", fichier);
+        }
       }
     }
   }
-  return 0;
 }

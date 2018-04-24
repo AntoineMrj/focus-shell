@@ -1,6 +1,6 @@
 #include "du.h"
 
-int du(int argc, char *argv[])
+void du(int argc, char *argv[])
 {
 
   struct stat s;
@@ -73,5 +73,4 @@ int du(int argc, char *argv[])
       }
     }
   }
-  return 0;
 }

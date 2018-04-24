@@ -8,7 +8,7 @@
 #include <dirent.h>
 #include "comCommunication.h"
 
-int du(int argc, char *argv[]);
+void du(int argc, char *argv[]);
 char *get_current_dir_name(void);
 
 #endif

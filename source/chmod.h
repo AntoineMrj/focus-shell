@@ -5,6 +5,6 @@
 #include <sys/stat.h>
 #include "comCommunication.h"
 
-int chmode(int argc, char *argv[]);
+void chmode(int argc, char *argv[]);
 
 #endif
