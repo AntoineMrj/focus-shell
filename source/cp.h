@@ -3,5 +3,5 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "comCommunication.h"
-int cp(int argc, char *argv[]);
+void cp(int argc, char *argv[]);
 #endif

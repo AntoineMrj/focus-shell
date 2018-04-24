@@ -1,7 +1,7 @@
-#include "cd.h"
+#include "chgrp.h"
 
 int main(int argc, char *argv[])
 {
-  cd(argc, argv);
+  chgrp(argc, argv);
   return 0;
 }

@@ -1,7 +1,7 @@
-#include "cd.h"
+#include "du.h"
 
 int main(int argc, char *argv[])
 {
-  cd(argc, argv);
+  du(argc, argv);
   return 0;
 }

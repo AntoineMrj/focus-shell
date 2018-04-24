@@ -4,5 +4,6 @@
 
 int main(int argc, char *argv[])
 {
-    return cp(argc, argv);
+    cp(argc, argv);
+    return 0;
 }

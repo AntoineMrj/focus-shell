@@ -1,53 +1,25 @@
 # README
 ## Projet SHELL
-### Membres
-- Nicolas Cuadros
-- Alexandre Nonnon
-- Antoine Marjault
-- Romain Andrieux
 
-### Composition du projet
+### Compilation du programme
 
-#### Partie interpréteur
+Nettoyage des répertoires : ```make clean```
 
-##### Binôme
+Compilation ```make```
 
-- Nicolas Cuadros
-- Antoine Marjault
+### Exécution
 
-##### Organisation
-Comment fonctionne les fichiers entre eux :
+Le programme existe en 3 versions différentes :
+- Version intégrée : les commandes du bash sont directement intégrées au code source du bash.
+- Version librairie : les commandes sont contenues dans une librairie externe.
+- Version processus : les processus sont sous formes d'éxécutables indépendants.
 
-- Le main lance le commandEntry
+Chacun de ces modes correspondent à un exécutable différent qui peut être lancé depuis le dossier Shell avec les commandes suivantes :
 
-    - Le commandEntry va s'occuper de lire les commandes utilisateurs. 
+- Version intégrée : ./bin/focusShell_int
+- Version librairie : ./bin/focusShell_lib
+- Version processus : ./bin/fovusShell_proc
 
--   Une fois lue, la commande est envoyé à la fonction analyse dans le commandManager
+### Informations supplémentaires
 
-    - Celle-ci va s'occuper d'envoyer la command à un parser
-
-    - Une fois parser la commande est exécutée  en allant chercher sa fonction associé dans une liste chainée
-
-Les résultats des commandes doivent être écrit dans les fichiers exit/standard et exit/error,
-ceux-çi seront gérés par le commandManager.
-Cela permet de gérer les flux correctement, sans redirection le commandManager ira directement lire les fichiers.
-Sinon il copiera leurs contenus dans d'autres ou s'en servira pour les pipes en placant leurs contenu dans un fichier temporaire
-exit/temp
-
-#### Partie commande
-
-##### Binôme
-
-- Alexandre Nonnon
-- Romain Andrieux
-
-##### Organisation
-
-Selon le mode les commandes auront différents prototypes :
-
-- Intégré et librairie : ```int cmd(int argc,char *argv[]) ```
-- Exécutable indépendant : ```int cmd(int argc,char ...) ```
-
-Chaque commande seront contenus dans le fichier à part.
-A l'initialisation du commandManager, les commandes seront stockées dans une liste chainé.
-Dans le cas de des exécutable, le dossier contenant les processus sera lu et chaque exécutable associé à une commande.
+Voir les fichiers : "rapport.pdf" .

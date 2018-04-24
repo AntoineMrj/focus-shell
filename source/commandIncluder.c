@@ -11,6 +11,9 @@ void initListCommands()
     addCmdIdentifier(cmdList, "pwd", pwd);
     addCmdIdentifier(cmdList, "cp", cp);
     addCmdIdentifier(cmdList, "cd", cd);
-    addCmdIdentifier(cmdList, "mkdir", mkdir);
-    return 1;
+    addCmdIdentifier(cmdList, "mkdir", makedir);
+    addCmdIdentifier(cmdList, "chown", chowner);
+    addCmdIdentifier(cmdList, "chgrp", chgrp);
+    addCmdIdentifier(cmdList, "chmod", chmode);
+    addCmdIdentifier(cmdList, "du", du);
 }

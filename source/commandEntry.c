@@ -7,7 +7,7 @@ int commandLine()
     char *entry = malloc(sizeof(char) * entrySize); //Commande de l'utilsateur
     initEnv();
     setEnvMode(BASHFILE);
-    initListCommands();
+    system("clear");
     //Tant que l'utilisateur ne quitte pas le terminal
     do
     {

@@ -1,6 +1,6 @@
 #include "cat.h"
 
-int cat(int argc, char *argv[])
+void cat(int argc, char *argv[])
 {
   int i;
   char ligne[1000] = "";
@@ -15,7 +15,6 @@ int cat(int argc, char *argv[])
       printErr("This file does not exist, check the name\n");
       break;
     }
-
     else
     {
       while (fgets(ligne, 1000, fichier))
@@ -27,5 +26,4 @@ int cat(int argc, char *argv[])
 
     fclose(fichier);
   }
-  return (0);
 }

@@ -1,6 +1,6 @@
 #include "ls.h"
 
-int ls(int argc, char *argv[])
+void ls(int argc, char *argv[])
 {
   DIR *dirp;
   struct dirent *dptr;
@@ -17,14 +17,15 @@ int ls(int argc, char *argv[])
   if ((dirp = opendir(repertoire_courant)) == NULL)
   {
     printErr("Erreur le dossier %s n'existe pas.\n", argv[1]);
-    return (-1);
   }
-
-  while ((dptr = readdir(dirp)))
+  else
   {
-    if (dptr->d_name[0] != '.')
-      print("%s\n", dptr->d_name);
+
+    while ((dptr = readdir(dirp)))
+    {
+      if (dptr->d_name[0] != '.')
+        print("%s\n", dptr->d_name);
+    }
+    closedir(dirp);
   }
-  closedir(dirp);
-  return 0;
 }

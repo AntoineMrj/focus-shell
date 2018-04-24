@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "comCommunication.h"
-int pwd(int argc, char *argv[]);
+void pwd(int argc, char *argv[]);
 
 #endif

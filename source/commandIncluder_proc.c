@@ -7,5 +7,4 @@ void initListCommands()
     cmdList = initList();
     addCmdIdentifier(cmdList, "cd", cd);
 
-    return 1;
 }

@@ -54,7 +54,10 @@ void executeProgram(char *path);
 
 //Vérifie si la chaine passée en paramètre correspond à un fichier standard executable qui existe
 int isProgram(char *name);
-
+//Vérifie si la commande existe
+int exist(command *cmd);
+//Détermine si la commande suivante doit être du texte ou non
+int isText(command *cmd);
 //Retourne le chemin vers le dossier contenant les processus pour le mode processus
 void setProcessPath(char *callCommand);
 

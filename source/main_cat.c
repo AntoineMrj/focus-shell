@@ -2,5 +2,6 @@
 
 int main(int argc, char *argv[])
 {
-    return cat(argc, argv);
+    cat(argc, argv);
+    return 0;
 }

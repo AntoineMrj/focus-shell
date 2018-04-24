@@ -1,7 +1,7 @@
-#include "cd.h"
+#include "chmod.h"
 
 int main(int argc, char *argv[])
 {
-  cd(argc, argv);
+  chmode(argc, argv);
   return 0;
 }

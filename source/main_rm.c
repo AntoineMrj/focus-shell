@@ -2,5 +2,6 @@
 
 int main(int argc, char *argv[])
 {
-    return rm(argc, argv);
+    rm(argc, argv);
+    return 0;
 }

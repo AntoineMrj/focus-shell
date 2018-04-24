@@ -9,13 +9,23 @@ void analyse(char *argv)
     commandQueue *cmdQueue = initQueue(); //création d'une liste FIFO
     while ((returnHandler = parse(tempParser, &cmd)) == 1)
     {
+        if (exist(cmd) == 0)
+        {
+            if (getTopQ(cmdQueue) == NULL || (getTopQ(cmdQueue) != NULL && isText(getTopQ(cmdQueue)) == 0))
+            {
+                printf(RED);
+                printf("La commande ou l'excécutable %s n'existe pas\n", cmd->name);
+                printf(WHT);
+                returnHandler = 2;
+                break;
+            }
+        }
         pushQ(cmdQueue, cmd); //On ajoute la commande à la liste
         cmd = NULL;
     }
-    executeQueue(cmdQueue, 1, 1);
-    if (returnHandler == 2)
+    if (returnHandler != 2)
     {
-        printf("ERREUR LORS DU PARSING DE LA COMMANDE\n");
+        executeQueue(cmdQueue, 1, 1);
     }
     //Vérification de l'erreur
 }
