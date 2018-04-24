@@ -1,4 +1,3 @@
-.vscode/launch.json
 bin/lib/*
 bin/processus/*
 object/*
