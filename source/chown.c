@@ -20,14 +20,18 @@ int chowner(int argc, char *argv[])
     pwd = getpwnam(argv[1]);
     if (pwd == NULL)
     {
-      printErr("Nom d'utilisateur incorrect\n");
+      printErr("%s: nom d'utilisateur incorrect\n",argv[1]);
       return -1;
     }
     uid = pwd->pw_uid;
-    fichier = argv[2];
-    if (chown(fichier, uid, -1) == -1)
+
+    for(int i=2; i<argc; i++)
     {
-      printErr("Nom de fichier incorrect\n");
+      fichier = argv[i];
+      if(chown(fichier, uid, -1) == -1)
+      {
+        printErr("%s: nom de fichier incorrect\n",fichier);
+      }
     }
   }
   return 0;

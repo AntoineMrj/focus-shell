@@ -20,14 +20,18 @@ int chgrp(int argc, char *argv[])
     grp = getgrnam(argv[1]);
     if (grp == NULL)
     {
-      printErr("Nom de groupe incorrect\n");
+      printErr("%s: nom de groupe incorrect\n",argv[1]);
       return -1;
     }
     gid = grp->gr_gid;
-    fichier = argv[2];
-    if (chown(fichier, -1, gid) == -1)
+
+    for(int i=2; i<argc; i++)
     {
-      printErr("Nom de fichier incorrect\n");
+      fichier = argv[i];
+      if(chown(fichier, -1, gid) == -1)
+      {
+        printErr("%s: nom de fichier incorrect\n",fichier);
+      }
     }
   }
   return 0;
