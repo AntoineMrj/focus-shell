@@ -15,7 +15,6 @@ int cat(int argc, char *argv[])
       printErr("This file does not exist, check the name\n");
       break;
     }
-
     else
     {
       while (fgets(ligne, 1000, fichier))

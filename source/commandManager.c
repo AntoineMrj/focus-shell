@@ -10,12 +10,19 @@ void analyse(char *argv)
     while ((returnHandler = parse(tempParser, &cmd)) == 1)
     {
         pushQ(cmdQueue, cmd); //On ajoute la commande à la liste
+        if (!exist(cmd))
+        {
+            printf(RED);
+            printf("La commande ou l'excécutable %s n'existe pas\n", cmd->name);
+            printf(WHT);
+            returnHandler = 2;
+            break;
+        }
         cmd = NULL;
     }
-    executeQueue(cmdQueue, 1, 1);
-    if (returnHandler == 2)
+    if (returnHandler != 2)
     {
-        printf("ERREUR LORS DU PARSING DE LA COMMANDE\n");
+        executeQueue(cmdQueue, 1, 1);
     }
     //Vérification de l'erreur
 }

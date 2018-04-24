@@ -1,5 +1,5 @@
 procDir=./bin/processus/
-libDir=./lib/
+libDir=./bin/lib/
 
 EXEC_INT=./bin/focusShell_int.exe
 EXEC_PROC=./bin/focusShell_proc.exe
@@ -30,7 +30,7 @@ all: $(EXEC_INT) $(LIB) $(EXEC_LIB) $(EXEC_PROC) $(PROC)
 
 
 $(EXEC_LIB):  $(OBJ_LIB) $(OBJ_BASE) $(OBJ_COMMANDE) 
-	gcc -o $(EXEC_LIB) $^  -ldl -L ./lib/ -lCommande
+	gcc -o $(EXEC_LIB) $^  -ldl -L $(libDir) -lCommande
 
 
 $(EXEC_PROC):  $(OBJ_PROC) $(OBJ_BASE) $(objectDir)cd.o $(objectDir)comCommunication.o 
@@ -86,6 +86,8 @@ $(procDir)cat : $(objectDir)comCommunication.o $(objectDir)cat.o $(objectDir)mai
 
 clean:
 	rm -rf $(objectDir)*.o
-
-mrproper: clean
-	rm -rf $(EXEC)
+	rm -rf $(procDir)*
+	rm -rf $(libDir)*
+	rm -rf $(EXEC_INT)
+	rm -rf $(EXEC_PROC)
+	rm -rf $(EXEC_LIB)

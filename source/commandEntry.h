@@ -11,4 +11,6 @@ int commandLine();
 //Gère l'affichage du terminal (affichage du path du dossier courant)
 void printHead();
 
+void sig_handler(int signo);
+
 #endif

@@ -25,19 +25,20 @@ void initEnv()
     stdFileName = malloc(sizeof(char) * 256);
     errFileName = malloc(sizeof(char) * 256);
     logFileName = malloc(sizeof(char) * 256);
+    folderName = malloc(sizeof(char) * 256);
 
     channelEnvVar = malloc(sizeof(char) * 128);
     char *temp = malloc(sizeof(char) * 32);
     env[0] = (char *)malloc(sizeof(char) * 256);
 
     char *pid = malloc(sizeof(char) * 256);
-    char *folderName = malloc(sizeof(char) * 256);
     sprintf(pid, "%i", getpid());
+    printf("%s\n", pid);
 
     sprintf(stdFileName, "/tmp/%s/std.out", pid);
     sprintf(errFileName, "/tmp/%s/err.out", pid);
     sprintf(logFileName, "/tmp/%s/log.out", pid);
-    sprintf(folderName, "tmp/%s", pid);
+    sprintf(folderName, "/tmp/%s/", pid);
     sprintf(temp, "/tmp/%s", pid);
     mkdir(temp, ACCESSPERMS);
     //Initialisation de la variable d'environment
@@ -84,7 +85,9 @@ void closeEnvironment()
 {
     remove(stdFileName);
     remove(errFileName);
+    remove(logFileName);
     remove(folderName);
+    system("clear");
 }
 
 //Retoune la taille d'un fichier

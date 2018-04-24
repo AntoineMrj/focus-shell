@@ -106,6 +106,31 @@ int executeCommand(command *cmd)
         }
     }
 }
+int exist(command *cmd)
+{
+    if (find(cmdList, cmd->name) != NULL)
+    {
+        return 1;
+    }
+    else
+    {
+        char *tempFile = malloc(sizeof(char) * 512);
+        strcpy(tempFile, processPath);
+        strcat(tempFile, cmd->name);
+        if (isProgram(cmd->name)) //si la commande est en fait un programme
+        {
+            return 1;
+        }
+        else if (isProgram(tempFile)) //si la commande est un processus
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+}
 
 //Execute une commande selon son mode
 void executeCommandToFile(command *cmd, char *file, const char *mode)

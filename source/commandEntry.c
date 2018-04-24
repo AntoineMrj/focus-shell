@@ -8,6 +8,7 @@ int commandLine()
     initEnv();
     setEnvMode(BASHFILE);
     initListCommands();
+    system("clear");
     //Tant que l'utilisateur ne quitte pas le terminal
     do
     {
