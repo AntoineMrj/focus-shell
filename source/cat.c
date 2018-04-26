@@ -17,7 +17,6 @@ void cat(int argc, char *argv[])
     }
     else
     {
-      print("\tFichier: %s\n\n", argv[i]);
       while (fgets(ligne, 1000, fichier))
       {
         print("%s", ligne);
