@@ -3,10 +3,7 @@
 //Fonction pour ls-l (affiche en plus les informations du fichier en argument)
 void show_file_info(char *filename, struct stat *info_p)
 {
-	char	*uid_to_name(), *ctime(), *gid_to_name(), *filemode();
-	void mode_to_letters();
-	char modestr[11];
-
+	char modestr[11]; //chaîne de 12 caractères (0->11) qui va contenir le mode
 	mode_to_letters(info_p->st_mode, modestr);
 
 	print("%s %d %s %s %ld %.12s ", modestr, (int)info_p->st_nlink, uid_to_name(info_p->st_uid), gid_to_name(info_p->st_gid), (long)info_p->st_size, 4+ctime(&info_p->st_mtime));
