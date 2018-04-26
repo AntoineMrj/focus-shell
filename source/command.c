@@ -78,6 +78,7 @@ MODE findMODE(char *string)
 //Execute une commande cmd
 int executeCommand(command *cmd)
 {
+    optind = 1;
     cmdFunction temp = find(cmdList, cmd->name);
     if (temp != NULL)
     {
