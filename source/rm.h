@@ -4,5 +4,7 @@
 #include <stdlib.h>
 #include "./comCommunication.h"
 void rm(int argc, char *argv[]);
-
+void compteFichiersArgs(int argc, char *argv[], int *nbFichier);
+int effacerArgument(char *toDelete);
+int verification();
 #endif
