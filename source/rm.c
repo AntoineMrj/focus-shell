@@ -1,10 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
-void compteFichiersArgs(int argc, char *argv[], int *nbFichier);
-int effacerArgument(char *toDelete);
-int verification();
+#include "rm.h"
 
 void rm(int argc, char *argv[])
 {
@@ -12,7 +6,7 @@ void rm(int argc, char *argv[])
     return;
 
   printf("nb arg :%d\n", argc);
-  char c = "";
+  int c;
 
   // Options possibles
   char AvailableOptions[] = "idf";
@@ -34,7 +28,7 @@ void rm(int argc, char *argv[])
   while (courant != EOF)
   {
     courant = getopt(argc, argv, AvailableOptions);
-    c = (char)courant;
+    c = courant;
     if (c == 'i')
     {
       i = 1;
@@ -82,7 +76,7 @@ void rm(int argc, char *argv[])
       if (retour == 1)
         effacerArgument(argv[i]);
     }
-    return 0;
+    return;
   }
 
   // Formule sans option, le d n'étant pas une option à gere

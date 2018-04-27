@@ -2,6 +2,7 @@
 #define MYECHO_H
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "comCommunication.h"
 void echo(int argc, char *argv[]);
 
