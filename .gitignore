@@ -4,3 +4,7 @@ object/*
 bin/focusShell_int
 bin/focusShell_lib
 bin/focusShell_proc
+
+!object/.gitkeep
+!bin/processus/.gitkeep
+!bin/lib/.gitkeep
