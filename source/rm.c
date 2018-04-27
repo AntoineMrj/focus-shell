@@ -5,7 +5,6 @@ void rm(int argc, char *argv[])
   if (argc == 1)
     return;
 
-  printf("nb arg :%d\n", argc);
   int c;
 
   // Options possibles
@@ -48,15 +47,12 @@ void rm(int argc, char *argv[])
 
   //On test l'existence d'un argument correspondant au fichier pour ne pas
   //aller effacer une case mémoire en cas de mauvaise manip de l'utilisateur
-  printf("nb de fichier %d \n", nbFichier);
   if (nbFichier <= 0)
   {
-    printf("Le Nombre d'argument est insuffisant, veuillez preciser les fichier à effacer\n");
+    printErr("Le Nombre d'argument est insuffisant, veuillez preciser les fichier à effacer\n");
     return;
   }
   nbChampsOption = argc - nbFichier - 1;
-
-  printf("options : i %d d %d f %d nb d\'options: %d\n", i, d, f, nbChampsOption);
 
   // Si l'option f est activée, on ignore les avertissements.
   if (f)
@@ -81,14 +77,9 @@ void rm(int argc, char *argv[])
 
   // Formule sans option, le d n'étant pas une option à gere
   // Car remove() supprime également les repertoires
-  retour = verification();
-  if (retour == 1)
+  for (int i = nbChampsOption + 1; i < argc; i++)
   {
-    for (int i = nbChampsOption + 1; i < argc; i++)
-    {
-      printf("tout va bien %d\n", i);
-      effacerArgument(argv[i]);
-    }
+    effacerArgument(argv[i]);
   }
   return;
 }
@@ -100,8 +91,8 @@ int verification()
   int saisieOk = 0;
   while (!saisieOk)
   {
-    printf("Etes vous sûr(e) de vouloir supprimer ce(s) fichier(s) ?\n");
-    printf("Yes/No ?\n");
+    print("Etes vous sûr(e) de vouloir supprimer ce(s) fichier(s) ?\n");
+    print("Yes/No ?\n");
     fgets(saisie, tailleSaisie, stdin);
     if (saisie[0] == 'Y' || saisie[0] == 'y')
     {
