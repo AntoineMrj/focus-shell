@@ -51,7 +51,7 @@ void cp(int argc, char *argv[])
         char chaine[1000] = "";
         if (source == NULL) //si le fichier à copier n'existe pas
         {
-          printErr("Le fichier source \"%s\" est introuvable.", argv[i]);
+          printErr("Le fichier source \"%s\" est introuvable.\n", argv[i]);
           return;
         }
         while (fgets(chaine, 1000, source) != NULL) //copie ligne par ligne du fichier source
