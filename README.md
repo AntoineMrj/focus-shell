@@ -1,5 +1,4 @@
-# README
-## Projet SHELL
+# Projet SHELL
 
 ### Compilation du programme
 
